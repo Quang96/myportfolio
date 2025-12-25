@@ -7,1172 +7,531 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --neon-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+        }
         
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Outfit', sans-serif; 
             overflow-x: hidden;
             scroll-behavior: smooth;
+            background-color: #f8fafc;
+            color: #1e293b;
         }
 
-        /* Background Grid */
-        .bg-grid {
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+        /* --- ADVANCED ANIMATIONS --- */
+
+        /* Gradient Text Animation */
+        .text-gradient-animate {
+            background: linear-gradient(to right, #ef4444, #f59e0b, #6366f1, #ef4444);
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s linear infinite;
         }
 
-        /* Gradient Mesh Background */
-        .gradient-mesh {
-            background: 
-                radial-gradient(at 20% 30%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-                radial-gradient(at 80% 70%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
+        @keyframes gradient-shift {
+            to { background-position: 200% center; }
         }
 
-        /* Hero Animations */
+        /* Float Animation */
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
         }
-
-        @keyframes pulse-slow {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
-
-        @keyframes slide-up {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slide-left {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slide-right {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
 
-        /* Scroll Reveal */
+        /* Blob Background */
+        .blob-bg {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            animation: blob-bounce 10s infinite alternate;
+        }
+        @keyframes blob-bounce {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        /* 3D Tilt Effect Base */
+        .tilt-card {
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* Reveal on Scroll */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Flow Line Animation */
-        @keyframes flow-down {
-            0% { 
-                stroke-dashoffset: 1000;
-                opacity: 0;
-            }
-            20% { opacity: 1; }
-            100% { 
-                stroke-dashoffset: 0;
-                opacity: 1;
-            }
+        /* Stagger Children */
+        .stagger-parent .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-parent .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-parent .reveal:nth-child(3) { transition-delay: 0.3s; }
+
+        /* Button Glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: var(--neon-shadow);
+            transform: translateY(-2px);
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after { left: 100%; }
+
+        /* Progress Bar Animation */
+        @keyframes fill-bar {
+            from { width: 0; }
+            to { width: var(--w); }
+        }
+        .progress-fill {
+            width: 0;
+            animation: fill-bar 1.5s ease-out forwards;
         }
 
-        .flow-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
-
-        .flow-line.active {
-            animation: flow-down 2s ease-out forwards;
-        }
-
-        /* Particle Effect */
-        @keyframes particle-rise {
-            0% { 
-                opacity: 0;
-                transform: translateY(0) scale(0);
-            }
-            50% {
-                opacity: 1;
-            }
-            100% { 
-                opacity: 0;
-                transform: translateY(-100px) scale(1);
-            }
-        }
-
-        .particle {
-            animation: particle-rise 3s ease-out infinite;
-        }
-
-        /* Data Flow Animation */
-        @keyframes data-flow {
-            0% {
-                transform: translateX(0) scale(1);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% {
-                transform: translateX(300px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        .data-particle {
-            animation: data-flow 2s ease-in-out infinite;
-        }
-
-        /* Card Flip */
-        .flip-card {
-            perspective: 1000px;
-        }
-
+        /* Flip Card */
+        .flip-card { perspective: 1000px; }
         .flip-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.6s;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
         }
-
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             backface-visibility: hidden;
+            border-radius: 1.5rem;
         }
-
-        .flip-card-back {
-            transform: rotateY(180deg);
-        }
-
-        /* Progress Bar Animation */
-        @keyframes progress {
-            from { width: 0%; }
-            to { width: var(--progress); }
-        }
-
-        .progress-bar {
-            animation: progress 2s ease-out forwards;
-        }
-
-        /* Glowing Effect */
-        .glow {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-            animation: pulse-slow 2s ease-in-out infinite;
-        }
-
-        /* Custom Cursor Trail */
-        .cursor-trail {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(99, 102, 241, 0.3);
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: screen;
-        }
+        .flip-card-back { transform: rotateY(180deg); }
 
         /* Modal */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
         }
-
-        .modal.active {
-            display: flex;
-            animation: fade-in 0.3s ease;
-        }
-
         .modal-content {
-            background: white;
-            border-radius: 24px;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slide-up 0.4s ease;
+            animation: modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        /* Counter Animation */
-        .counter {
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Smooth Scroll Indicator */
-        .scroll-indicator {
-            animation: float 2s ease-in-out infinite;
-        }
-
-        /* Timeline Connector */
-        .timeline-dot {
-            position: relative;
-        }
-
-        .timeline-dot::after {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, #6366f1 0%, transparent 100%);
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-        }
-
-        /* Responsive Typography */
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .section-title { font-size: 2rem; }
+        @keyframes modal-pop {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
-<body class="bg-white text-gray-900">
+<body class="relative">
 
-    <!-- HERO SECTION - Visual Storytelling -->
-    <section class="min-h-screen flex items-center justify-center bg-grid gradient-mesh relative overflow-hidden">
-        <!-- Floating Elements Background -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden">
-            <div class="absolute top-20 left-10 w-32 h-32 bg-indigo-200 rounded-full opacity-20 animate-float" style="animation-delay: 0s;"></div>
-            <div class="absolute top-40 right-20 w-24 h-24 bg-green-200 rounded-full opacity-20 animate-float" style="animation-delay: 1s;"></div>
-            <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-amber-200 rounded-full opacity-20 animate-float" style="animation-delay: 2s;"></div>
-            <div class="absolute bottom-40 right-1/3 w-28 h-28 bg-red-200 rounded-full opacity-20 animate-float" style="animation-delay: 1.5s;"></div>
-        </div>
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="blob-bg w-96 h-96 bg-purple-300 rounded-full top-0 left-0 mix-blend-multiply opacity-50"></div>
+        <div class="blob-bg w-96 h-96 bg-yellow-200 rounded-full top-0 right-0 mix-blend-multiply opacity-50 animation-delay-2000"></div>
+        <div class="blob-bg w-96 h-96 bg-pink-300 rounded-full -bottom-32 left-20 mix-blend-multiply opacity-50 animation-delay-4000"></div>
+    </div>
 
-        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
-            <!-- Main Visual -->
-            <div class="mb-12 reveal">
-                <div class="relative inline-block">
-                    <!-- Character Illustration -->
-                    <div class="text-9xl mb-6 animate-pulse-slow">
-                        😰
-                    </div>
-                    
-                    <!-- Flying tasks around character -->
-                    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-                        <div class="absolute top-0 left-0 text-4xl opacity-60 animate-float" style="animation-delay: 0s;">📧</div>
-                        <div class="absolute top-0 right-0 text-4xl opacity-60 animate-float" style="animation-delay: 0.5s;">📊</div>
-                        <div class="absolute bottom-0 left-0 text-4xl opacity-60 animate-float" style="animation-delay: 1s;">💬</div>
-                        <div class="absolute bottom-0 right-0 text-4xl opacity-60 animate-float" style="animation-delay: 1.5s;">📋</div>
-                    </div>
-                </div>
+    <section class="min-h-screen flex flex-col justify-center items-center relative px-6 pt-20 pb-10">
+        <div class="max-w-5xl mx-auto text-center z-10">
+            
+            <div class="reveal inline-block mb-6 px-4 py-2 rounded-full glass-card border-indigo-200 bg-white/50">
+                <span class="text-indigo-600 font-bold tracking-wider text-sm">🚀 AUTOMATION AGENCY</span>
             </div>
 
-            <!-- Headline -->
-            <h1 class="hero-title text-5xl md:text-7xl font-black mb-6 leading-tight reveal" style="animation-delay: 0.2s;">
-                <span class="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">15 giờ/tuần</span><br>
-                <span class="text-gray-900">đang bị lãng phí</span>
+            <h1 class="reveal text-6xl md:text-8xl font-black leading-tight mb-8 tracking-tight" style="transition-delay: 0.1s;">
+                Kẻ trộm
+                <br>
+                <span class="text-gradient-animate">thời gian lớn nhất</span>
             </h1>
 
-            <!-- Subheadline -->
-            <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto reveal" style="animation-delay: 0.4s;">
-                Công việc lặp đi lặp lại là <strong class="text-gray-900">kẻ trộm thời gian</strong> lớn nhất
+            <p class="reveal text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto font-light" style="transition-delay: 0.2s;">
+                Không phải mạng xã hội. Đó là những công việc <strong class="text-slate-900 font-bold">nhỏ nhặt, lặp đi lặp lại</strong> đang âm thầm lấy đi 15h/tuần của bạn.
             </p>
 
-            <!-- CTA Button -->
-            <a href="#solution" class="inline-flex items-center gap-3 bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-xl hover:shadow-2xl hover:bg-indigo-700 hover:scale-105 transition-all reveal" style="animation-delay: 0.6s;">
-                <span>Khám phá giải pháp</span>
-                <i class="fa-solid fa-arrow-down scroll-indicator"></i>
-            </a>
-
-            <!-- Stats Counter -->
-            <div class="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto reveal" style="animation-delay: 0.8s;">
-                <div class="text-center">
-                    <div class="text-4xl font-black text-indigo-600 mb-2">
-                        <span class="counter" data-target="15">0</span>h
-                    </div>
-                    <div class="text-sm text-gray-600">Tiết kiệm/tuần</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-black text-green-600 mb-2">
-                        <span class="counter" data-target="80">0</span>%
-                    </div>
-                    <div class="text-sm text-gray-600">Giảm thời gian</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-black text-amber-600 mb-2">
-                        24/7
-                    </div>
-                    <div class="text-sm text-gray-600">Tự động hóa</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROBLEM SECTION - Split Screen Comparison -->
-    <section id="problem" class="py-24 bg-gradient-to-b from-white to-gray-50 relative">
-        <!-- Connection Line from Hero -->
-        <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full" width="2" height="100">
-            <line x1="1" y1="0" x2="1" y2="100" stroke="#cbd5e1" stroke-width="2" class="flow-line"/>
-        </svg>
-
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="section-title text-4xl md:text-5xl font-black text-center mb-16 reveal">
-                Một ngày của bạn
-            </h2>
-
-            <div class="grid md:grid-cols-2 gap-8 relative">
-                <!-- VS Divider -->
-                <div class="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full items-center justify-center text-2xl font-black text-gray-400 shadow-xl z-10">
-                    VS
-                </div>
-
-                <!-- BEFORE - Manual Work (Left) -->
-                <div class="reveal bg-gradient-to-br from-red-50 to-red-100 rounded-3xl p-8 border-4 border-red-200 relative overflow-hidden" style="animation-delay: 0.2s;">
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 to-red-600"></div>
-                    
-                    <div class="text-center mb-8">
-                        <div class="text-7xl mb-4 animate-pulse-slow">😰</div>
-                        <h3 class="text-2xl font-bold text-red-900 mb-2">Cách Cũ</h3>
-                        <p class="text-red-700 text-sm">Thủ công - Lặp đi lặp lại</p>
-                    </div>
-
-                    <!-- Task List -->
-                    <div class="space-y-4">
-                        <div class="bg-white rounded-xl p-4 shadow-md">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="text-2xl">📧</div>
-                                <div class="flex-1">
-                                    <div class="h-2 bg-red-200 rounded-full">
-                                        <div class="h-2 bg-red-500 rounded-full progress-bar" style="--progress: 100%"></div>
-                                    </div>
-                                </div>
-                                <span class="text-sm font-bold text-red-600">2h</span>
-                            </div>
-                            <p class="text-xs text-gray-600">Check & reply emails</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-4 shadow-md">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="text-2xl">📊</div>
-                                <div class="flex-1">
-                                    <div class="h-2 bg-red-200 rounded-full">
-                                        <div class="h-2 bg-red-500 rounded-full progress-bar" style="--progress: 100%; animation-delay: 0.5s;"></div>
-                                    </div>
-                                </div>
-                                <span class="text-sm font-bold text-red-600">1.5h</span>
-                            </div>
-                            <p class="text-xs text-gray-600">Update spreadsheets</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-4 shadow-md">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="text-2xl">💬</div>
-                                <div class="flex-1">
-                                    <div class="h-2 bg-red-200 rounded-full">
-                                        <div class="h-2 bg-red-500 rounded-full progress-bar" style="--progress: 100%; animation-delay: 1s;"></div>
-                                    </div>
-                                </div>
-                                <span class="text-sm font-bold text-red-600">1h</span>
-                            </div>
-                            <p class="text-xs text-gray-600">Reply messages</p>
-                        </div>
-                    </div>
-
-                    <!-- Total Time -->
-                    <div class="mt-6 text-center p-4 bg-red-200 rounded-xl">
-                        <div class="text-3xl font-black text-red-900">3+ giờ/ngày</div>
-                        <p class="text-sm text-red-700">Công việc lặp lại</p>
-                    </div>
-                </div>
-
-                <!-- AFTER - Automated (Right) -->
-                <div class="reveal bg-gradient-to-br from-green-50 to-green-100 rounded-3xl p-8 border-4 border-green-200 relative overflow-hidden" style="animation-delay: 0.4s;">
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-green-600"></div>
-                    
-                    <div class="text-center mb-8">
-                        <div class="text-7xl mb-4">😎</div>
-                        <h3 class="text-2xl font-bold text-green-900 mb-2">Với AI</h3>
-                        <p class="text-green-700 text-sm">Tự động - Chính xác - 24/7</p>
-                    </div>
-
-                    <!-- Automated Tasks -->
-                    <div class="space-y-4">
-                        <div class="bg-white rounded-xl p-4 shadow-md">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="text-2xl">✅</div>
-                                <div class="flex-1">
-                                    <div class="h-2 bg-green-200 rounded-full">
-                                        <div class="h-2 bg-green-500 rounded-full progress-bar" style="--progress: 20%"></div>
-                                    </div>
-                                </div>
-                                <span class="text-sm font-bold text-green-600">15p</span>
-                            </div>
-                            <p class="text-xs text-gray-600">Auto email processing</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-4 shadow-md">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="text-2xl">✅</div>
-                                <div class="flex-1">
-                                    <div class="h-2 bg-green-200 rounded-full">
-                                        <div class="h-2 bg-green-500 rounded-full progress-bar" style="--progress: 15%; animation-delay: 0.5s;"></div>
-                                    </div>
-                                </div>
-                                <span class="text-sm font-bold text-green-600">10p</span>
-                            </div>
-                            <p class="text-xs text-gray-600">Auto data sync</p>
-                        </div>
-
-                        <div class="bg-white rounded-xl p-4 shadow-md">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="text-2xl">✅</div>
-                                <div class="flex-1">
-                                    <div class="h-2 bg-green-200 rounded-full">
-                                        <div class="h-2 bg-green-500 rounded-full progress-bar" style="--progress: 10%; animation-delay: 1s;"></div>
-                                    </div>
-                                </div>
-                                <span class="text-sm font-bold text-green-600">5p</span>
-                            </div>
-                            <p class="text-xs text-gray-600">Auto responses</p>
-                        </div>
-                    </div>
-
-                    <!-- Total Time Saved -->
-                    <div class="mt-6 text-center p-4 bg-green-200 rounded-xl">
-                        <div class="text-3xl font-black text-green-900">30 phút/ngày</div>
-                        <p class="text-sm text-green-700">Chỉ cần duyệt kết quả</p>
-                    </div>
-
-                    <!-- Bonus Time -->
-                    <div class="mt-4 text-center p-3 bg-gradient-to-r from-amber-100 to-amber-200 rounded-xl border-2 border-amber-300">
-                        <p class="text-sm font-bold text-amber-900">
-                            🎉 Bạn có thêm <span class="text-xl">2.5 giờ</span> mỗi ngày!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SOLUTION SECTION - Interactive Workflow -->
-    <section id="solution" class="py-24 bg-white relative">
-        <!-- Connection Line -->
-        <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full" width="2" height="100">
-            <line x1="1" y1="0" x2="1" y2="100" stroke="#cbd5e1" stroke-width="2" class="flow-line"/>
-        </svg>
-
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="section-title text-4xl md:text-5xl font-black text-center mb-6 reveal">
-                Cách hoạt động
-            </h2>
-            <p class="text-xl text-gray-600 text-center mb-16 reveal" style="animation-delay: 0.2s;">
-                Click vào từng bước để khám phá
-            </p>
-
-            <!-- Interactive Workflow -->
-            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4">
-                <!-- Step 1: You -->
-                <div class="workflow-card reveal cursor-pointer group" onclick="showWorkflowDetail(1)" style="animation-delay: 0.2s;">
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full transform translate-x-16 -translate-y-16"></div>
-                        
-                        <div class="relative z-10">
-                            <div class="text-7xl mb-4 group-hover:scale-110 transition-transform">👤</div>
-                            <h3 class="text-2xl font-bold mb-2">Bạn</h3>
-                            <p class="text-blue-100 text-sm">Đưa ra yêu cầu</p>
-                            
-                            <div class="mt-4 inline-block bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-semibold">
-                                Click để xem →
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="text-4xl text-gray-300 hidden md:block transform rotate-0 md:rotate-0">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-                <div class="text-4xl text-gray-300 md:hidden">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-
-                <!-- Step 2: AI Agent -->
-                <div class="workflow-card reveal cursor-pointer group" onclick="showWorkflowDetail(2)" style="animation-delay: 0.4s;">
-                    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 relative overflow-hidden glow">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full transform translate-x-16 -translate-y-16"></div>
-                        
-                        <!-- Particles Effect -->
-                        <div class="absolute inset-0 pointer-events-none overflow-hidden">
-                            <div class="particle absolute w-2 h-2 bg-white rounded-full" style="left: 20%; animation-delay: 0s;"></div>
-                            <div class="particle absolute w-2 h-2 bg-white rounded-full" style="left: 50%; animation-delay: 1s;"></div>
-                            <div class="particle absolute w-2 h-2 bg-white rounded-full" style="left: 80%; animation-delay: 2s;"></div>
-                        </div>
-                        
-                        <div class="relative z-10">
-                            <div class="text-7xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
-                            <h3 class="text-2xl font-bold mb-2">AI Agent</h3>
-                            <p class="text-purple-100 text-sm">Xử lý & thực thi</p>
-                            
-                            <div class="mt-4 inline-block bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-semibold">
-                                Click để xem →
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="text-4xl text-gray-300 hidden md:block">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-                <div class="text-4xl text-gray-300 md:hidden">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-
-                <!-- Step 3: Result -->
-                <div class="workflow-card reveal cursor-pointer group" onclick="showWorkflowDetail(3)" style="animation-delay: 0.6s;">
-                    <div class="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full transform translate-x-16 -translate-y-16"></div>
-                        
-                        <div class="relative z-10">
-                            <div class="text-7xl mb-4 group-hover:scale-110 transition-transform">🎯</div>
-                            <h3 class="text-2xl font-bold mb-2">Kết quả</h3>
-                            <p class="text-green-100 text-sm">Hoàn thành tự động</p>
-                            
-                            <div class="mt-4 inline-block bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-semibold">
-                                Click để xem →
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Benefits -->
-            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 reveal" style="animation-delay: 0.8s;">
-                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border-2 border-gray-200">
-                    <div class="text-5xl mb-4">⚡</div>
-                    <h4 class="text-lg font-bold text-gray-900 mb-2">Tốc độ</h4>
-                    <p class="text-gray-600 text-sm">Xử lý nhanh gấp 10x con người</p>
-                </div>
-                
-                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border-2 border-gray-200">
-                    <div class="text-5xl mb-4">🎯</div>
-                    <h4 class="text-lg font-bold text-gray-900 mb-2">Chính xác</h4>
-                    <p class="text-gray-600 text-sm">Độ chính xác >95%, không sai sót</p>
-                </div>
-                
-                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border-2 border-gray-200">
-                    <div class="text-5xl mb-4">🔄</div>
-                    <h4 class="text-lg font-bold text-gray-900 mb-2">24/7</h4>
-                    <p class="text-gray-600 text-sm">Hoạt động không ngừng nghỉ</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- RESULTS SECTION - Visual Cards -->
-    <section id="results" class="py-24 bg-gradient-to-b from-white to-gray-50 relative">
-        <!-- Connection Line -->
-        <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full" width="2" height="100">
-            <line x1="1" y1="0" x2="1" y2="100" stroke="#cbd5e1" stroke-width="2" class="flow-line"/>
-        </svg>
-
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="section-title text-4xl md:text-5xl font-black text-center mb-6 reveal">
-                Kết quả thực tế
-            </h2>
-            <p class="text-xl text-gray-600 text-center mb-16 reveal" style="animation-delay: 0.2s;">
-                Hover để xem kết quả, click để xem chi tiết
-            </p>
-
-            <!-- Project Cards Grid -->
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <!-- Card 1: Boxlok -->
-                <div class="flip-card reveal cursor-pointer" onclick="openModal('boxlok')" style="animation-delay: 0.2s;">
-                    <div class="flip-card-inner min-h-[400px]">
-                        <!-- Front -->
-                        <div class="flip-card-front bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between mb-6">
-                                    <img src="https://boxnlok.vn/web_images/logo.svg" alt="Boxlok" class="w-24 h-auto bg-white p-2 rounded-lg">
-                                    <span class="bg-white text-indigo-600 px-3 py-1 rounded-full text-xs font-bold">⭐ FEATURED</span>
-                                </div>
-                                
-                                <h3 class="text-3xl font-bold mb-3">Boxlok Logistics</h3>
-                                <p class="text-indigo-100 mb-6">AI viết blog SEO & tạo hình ảnh tự động</p>
-                            </div>
-                            
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">🚀</div>
-                                    <div>
-                                        <div class="text-2xl font-black">12 bài/tháng</div>
-                                        <div class="text-sm text-indigo-100">Content chất lượng</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">⏱️</div>
-                                    <div>
-                                        <div class="text-2xl font-black">15 phút</div>
-                                        <div class="text-sm text-indigo-100">Thời gian duyệt</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-6 text-center py-3 bg-white bg-opacity-20 rounded-full text-sm font-semibold">
-                                Hover để xem sau →
-                            </div>
-                        </div>
-                        
-                        <!-- Back -->
-                        <div class="flip-card-back bg-gradient-to-br from-purple-600 to-indigo-500 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-center">
-                            <h4 class="text-2xl font-bold mb-6 text-center">Trước & Sau</h4>
-                            
-                            <div class="space-y-4">
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-red-200 text-xs font-bold mb-2">❌ TRƯỚC</div>
-                                    <p class="text-sm">3-4 giờ/tuần tự viết content & tìm hình</p>
-                                </div>
-                                
-                                <div class="flex justify-center text-3xl">↓</div>
-                                
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-green-200 text-xs font-bold mb-2">✅ SAU</div>
-                                    <p class="text-sm">100% tự động, chỉ cần 15p duyệt</p>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-6 text-center py-3 bg-white bg-opacity-20 rounded-full text-sm font-semibold">
-                                Click để xem chi tiết →
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: F&B -->
-                <div class="flip-card reveal cursor-pointer" onclick="openModal('fnb')" style="animation-delay: 0.4s;">
-                    <div class="flip-card-inner min-h-[400px]">
-                        <!-- Front -->
-                        <div class="flip-card-front bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between mb-6">
-                                    <div class="text-7xl">🍔</div>
-                                    <span class="bg-white text-green-600 px-3 py-1 rounded-full text-xs font-bold">⭐ FEATURED</span>
-                                </div>
-                                
-                                <h3 class="text-3xl font-bold mb-3">Chuỗi Nhà Hàng F&B</h3>
-                                <p class="text-green-100 mb-6">Trợ lý ảo 24/7 qua Telegram</p>
-                            </div>
-                            
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">🔎</div>
-                                    <div>
-                                        <div class="text-2xl font-black">>90%</div>
-                                        <div class="text-sm text-green-100">Độ chính xác</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">📱</div>
-                                    <div>
-                                        <div class="text-2xl font-black">24/7</div>
-                                        <div class="text-sm text-green-100">Mọi lúc mọi nơi</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-6 text-center py-3 bg-white bg-opacity-20 rounded-full text-sm font-semibold">
-                                Hover để xem sau →
-                            </div>
-                        </div>
-                        
-                        <!-- Back -->
-                        <div class="flip-card-back bg-gradient-to-br from-emerald-600 to-green-500 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-center">
-                            <h4 class="text-2xl font-bold mb-6 text-center">Trước & Sau</h4>
-                            
-                            <div class="space-y-4">
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-red-200 text-xs font-bold mb-2">❌ TRƯỚC</div>
-                                    <p class="text-sm">Mở laptop tra giá vốn mỗi khi họp</p>
-                                </div>
-                                
-                                <div class="flex justify-center text-3xl">↓</div>
-                                
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-green-200 text-xs font-bold mb-2">✅ SAU</div>
-                                    <p class="text-sm">Chat Bot trả lời ngay, alert realtime</p>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-6 text-center py-3 bg-white bg-opacity-20 rounded-full text-sm font-semibold">
-                                Click để xem chi tiết →
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: HR -->
-                <div class="flip-card reveal cursor-pointer" onclick="openModal('hr')" style="animation-delay: 0.6s;">
-                    <div class="flip-card-inner min-h-[400px]">
-                        <div class="flip-card-front bg-gradient-to-br from-blue-500 to-cyan-600 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-between">
-                            <div>
-                                <div class="text-7xl mb-6">👥</div>
-                                <h3 class="text-3xl font-bold mb-3">Quản Lý Nhân Sự</h3>
-                                <p class="text-blue-100 mb-6">Dashboard KPI realtime</p>
-                            </div>
-                            
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">⚡</div>
-                                    <div>
-                                        <div class="text-2xl font-black">80%</div>
-                                        <div class="text-sm text-blue-100">Giảm thời gian</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">📊</div>
-                                    <div>
-                                        <div class="text-2xl font-black">3 phòng ban</div>
-                                        <div class="text-sm text-blue-100">Sync tự động</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="flip-card-back bg-gradient-to-br from-cyan-600 to-blue-500 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-center">
-                            <h4 class="text-2xl font-bold mb-6 text-center">Trước & Sau</h4>
-                            
-                            <div class="space-y-4">
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-red-200 text-xs font-bold mb-2">❌ TRƯỚC</div>
-                                    <p class="text-sm">File rời rạc, khó kiểm soát KPI</p>
-                                </div>
-                                
-                                <div class="flex justify-center text-3xl">↓</div>
-                                
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-green-200 text-xs font-bold mb-2">✅ SAU</div>
-                                    <p class="text-sm">Dashboard realtime, báo cáo tự động</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: Twitter -->
-                <div class="flip-card reveal cursor-pointer" onclick="openModal('twitter')" style="animation-delay: 0.8s;">
-                    <div class="flip-card-inner min-h-[400px]">
-                        <div class="flip-card-front bg-gradient-to-br from-sky-500 to-blue-600 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-between">
-                            <div>
-                                <div class="text-7xl mb-6">🐦</div>
-                                <h3 class="text-3xl font-bold mb-3">Twitter Content AI</h3>
-                                <p class="text-sky-100 mb-6">Auto post & schedule</p>
-                            </div>
-                            
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">🚀</div>
-                                    <div>
-                                        <div class="text-2xl font-black">2-3x</div>
-                                        <div class="text-sm text-sky-100">Scale content</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center gap-3 bg-white bg-opacity-20 rounded-xl p-3">
-                                    <div class="text-3xl">📈</div>
-                                    <div>
-                                        <div class="text-2xl font-black">+40%</div>
-                                        <div class="text-sm text-sky-100">Engagement</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="flip-card-back bg-gradient-to-br from-blue-600 to-sky-500 rounded-3xl p-8 shadow-xl text-white flex flex-col justify-center">
-                            <h4 class="text-2xl font-bold mb-6 text-center">Trước & Sau</h4>
-                            
-                            <div class="space-y-4">
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-red-200 text-xs font-bold mb-2">❌ TRƯỚC</div>
-                                    <p class="text-sm">2h/ngày nghĩ content & đăng bài</p>
-                                </div>
-                                
-                                <div class="flex justify-center text-3xl">↓</div>
-                                
-                                <div class="bg-white bg-opacity-20 rounded-xl p-4">
-                                    <div class="text-green-200 text-xs font-bold mb-2">✅ SAU</div>
-                                    <p class="text-sm">AI scan trending, schedule golden time</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA SECTION - The Bridge -->
-    <section class="py-24 bg-gradient-to-b from-gray-50 to-white relative">
-        <!-- Connection Line -->
-        <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full" width="2" height="100">
-            <line x1="1" y1="0" x2="1" y2="100" stroke="#cbd5e1" stroke-width="2" class="flow-line"/>
-        </svg>
-
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <!-- Bridge Illustration -->
-            <div class="mb-12 reveal">
-                <div class="flex items-center justify-center gap-8">
-                    <div class="text-center">
-                        <div class="text-6xl mb-3">😰</div>
-                        <p class="text-lg font-bold text-red-600">Bận rộn</p>
-                        <p class="text-sm text-gray-500">Làm việc nhiều<br>Tiến bộ ít</p>
-                    </div>
-                    
-                    <div class="flex-1 relative">
-                        <svg viewBox="0 0 200 100" class="w-full h-24">
-                            <!-- Bridge path -->
-                            <path d="M 0,80 Q 100,20 200,80" fill="none" stroke="#6366f1" stroke-width="4" class="flow-line"/>
-                            <!-- Support pillars -->
-                            <line x1="50" y1="60" x2="50" y2="100" stroke="#94a3b8" stroke-width="3"/>
-                            <line x1="150" y1="60" x2="150" y2="100" stroke="#94a3b8" stroke-width="3"/>
-                        </svg>
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap">
-                            Tự động hóa
-                        </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="text-6xl mb-3">😎</div>
-                        <p class="text-lg font-bold text-green-600">Tự do</p>
-                        <p class="text-sm text-gray-500">Làm ít hơn<br>Đạt nhiều hơn</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Headline -->
-            <h2 class="text-4xl md:text-5xl font-black mb-6 reveal" style="animation-delay: 0.2s;">
-                Bạn ở bên nào?
-            </h2>
-
-            <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto reveal" style="animation-delay: 0.4s;">
-                Kể cho tôi nghe về công việc của bạn.<br>
-                Tôi sẽ tìm ra cách tự động hóa nó.
-            </p>
-
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal" style="animation-delay: 0.6s;">
-                <a href="https://zalo.me/0909063196" class="group inline-flex items-center justify-center gap-3 bg-indigo-600 text-white px-8 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-indigo-500/50 hover:bg-indigo-700 hover:scale-105 transition-all">
-                    <i class="fa-brands fa-youtube text-2xl group-hover:scale-110 transition-transform"></i>
-                    <span>Tư vấn miễn phí qua Zalo</span>
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+            <div class="reveal flex flex-col sm:flex-row gap-4 justify-center items-center" style="transition-delay: 0.3s;">
+                <a href="#solution" class="btn-glow px-8 py-4 bg-indigo-600 text-white rounded-full font-bold text-lg shadow-lg hover:bg-indigo-700 transition-colors flex items-center gap-2 group">
+                    <span>Xử lý ngay</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#problem" class="px-8 py-4 text-slate-600 font-medium hover:text-indigo-600 transition-colors">
+                    Tìm hiểu thêm ↓
                 </a>
             </div>
 
-            <!-- Contact Info -->
-            <div class="mt-8 reveal" style="animation-delay: 0.8s;">
-                <p class="text-gray-500 text-sm mb-2">Hoặc liên hệ trực tiếp</p>
-                <p class="text-2xl font-bold text-indigo-600">📞 0909 063 196</p>
-            </div>
-
-            <!-- Social Proof -->
-            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 reveal" style="animation-delay: 1s;">
-                <div class="text-center">
-                    <div class="text-4xl mb-3">⭐⭐⭐⭐⭐</div>
-                    <p class="text-sm text-gray-600">"Tiết kiệm 15h/tuần!"</p>
-                    <p class="text-xs text-gray-500 mt-1">- CEO Boxlok</p>
+            <div class="relative mt-20 w-full max-w-4xl mx-auto h-24 reveal" style="transition-delay: 0.4s;">
+                <div class="absolute left-10 md:left-20 animate-float" style="animation-delay: 0s;">
+                    <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-red-500 font-bold transform rotate-[-6deg]">
+                        <i class="fa-solid fa-envelope"></i> 2h Email
+                    </div>
                 </div>
-                
-                <div class="text-center">
-                    <div class="text-4xl mb-3">⭐⭐⭐⭐⭐</div>
-                    <p class="text-sm text-gray-600">"Không còn stress"</p>
-                    <p class="text-xs text-gray-500 mt-1">- Manager F&B</p>
+                <div class="absolute right-10 md:right-20 animate-float" style="animation-delay: 1s;">
+                    <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-orange-500 font-bold transform rotate-[6deg]">
+                        <i class="fa-solid fa-file-excel"></i> 3h Excel
+                    </div>
                 </div>
-                
-                <div class="text-center">
-                    <div class="text-4xl mb-3">⭐⭐⭐⭐⭐</div>
-                    <p class="text-sm text-gray-600">"Team tập trung hơn"</p>
-                    <p class="text-xs text-gray-500 mt-1">- HR Lead</p>
+                <div class="absolute left-1/2 top-10 transform -translate-x-1/2 animate-float" style="animation-delay: 2s;">
+                    <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-blue-500 font-bold">
+                        <i class="fa-solid fa-comment-dots"></i> 1.5h Support
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- MODALS for Case Studies -->
-    <div id="modal-boxlok" class="modal" onclick="closeModal('boxlok')">
-        <div class="modal-content p-8 m-4" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-3xl font-black text-indigo-600">Boxlok Logistics</h3>
-                <button onclick="closeModal('boxlok')" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
+    <section id="problem" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-black text-center mb-16 reveal">
+                Một ngày của bạn
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-16 items-stretch">
+                <div class="reveal glass-card p-8 rounded-3xl border-l-8 border-red-400 relative overflow-hidden group hover:shadow-xl transition-all">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl group-hover:scale-110 transition-transform select-none">😰</div>
+                    
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Thủ Công (Cũ)</h3>
+                    <p class="text-red-500 font-medium mb-8">Căng thẳng & Lãng phí</p>
+
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">Check & Reply Email</span>
+                                <span class="text-sm font-bold text-red-500">2h/ngày</span>
+                            </div>
+                            <div class="h-2 bg-red-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500 rounded-full progress-fill" style="--w: 100%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">Nhập liệu Excel</span>
+                                <span class="text-sm font-bold text-red-500">1.5h/ngày</span>
+                            </div>
+                            <div class="h-2 bg-red-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500 rounded-full progress-fill" style="--w: 80%; animation-delay: 0.2s"></div>
+                            </div>
+                        </div>
+                        <div class="mt-8 bg-red-50 p-4 rounded-xl text-center border border-red-100">
+                            <span class="block text-3xl font-black text-red-600">Mất 15h+</span>
+                            <span class="text-sm text-red-400">mỗi tuần cho việc lặp lại</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal glass-card p-8 rounded-3xl border-l-8 border-emerald-400 relative overflow-hidden group hover:shadow-xl transition-all" style="transition-delay: 0.2s;">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl group-hover:scale-110 transition-transform select-none">😎</div>
+                    
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Với AI Automation</h3>
+                    <p class="text-emerald-500 font-medium mb-8">Tự động & Chính xác</p>
+
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">AI xử lý Email</span>
+                                <span class="text-sm font-bold text-emerald-500">5 phút</span>
+                            </div>
+                            <div class="h-2 bg-emerald-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 rounded-full progress-fill" style="--w: 10%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">Auto-sync Data</span>
+                                <span class="text-sm font-bold text-emerald-500">0 phút</span>
+                            </div>
+                            <div class="h-2 bg-emerald-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 rounded-full progress-fill" style="--w: 2%; animation-delay: 0.2s"></div>
+                            </div>
+                        </div>
+                        <div class="mt-8 bg-emerald-50 p-4 rounded-xl text-center border border-emerald-100 shadow-sm">
+                            <span class="block text-3xl font-black text-emerald-600">Tiết kiệm 90%</span>
+                            <span class="text-sm text-emerald-500">thời gian làm việc</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <section id="solution" class="py-24 bg-white/50 backdrop-blur-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-black text-center mb-6 reveal">
+                Kết quả thực tế
+            </h2>
+            <p class="text-center text-slate-500 mb-16 reveal">Di chuột vào thẻ để xem chi tiết</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-parent">
+                
+                <div class="flip-card min-h-[450px] cursor-pointer reveal group" onclick="openModal('boxlok')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-indigo-500 to-violet-600 text-white p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                            <div>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">LOGISTICS</span>
+                                <h3 class="text-3xl font-bold mt-4">Boxlok</h3>
+                                <p class="text-indigo-100 mt-2 opacity-80">Tự động viết Blog & SEO</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-black mb-2">12</div>
+                                <div class="text-sm text-indigo-100 uppercase tracking-widest">Bài viết/tháng</div>
+                                <div class="mt-4 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">100% Tự động</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-slate-800 text-white p-8 shadow-2xl flex flex-col justify-center items-center text-center">
+                            <h4 class="text-xl font-bold text-indigo-400 mb-4">Kết quả chuyển đổi</h4>
+                            <ul class="text-left space-y-4 text-sm text-slate-300 w-full">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tiết kiệm 4h/tuần
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Hình ảnh AI tạo tự động
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Auto post WordPress
+                                </li>
+                            </ul>
+                            <button class="mt-8 px-6 py-2 bg-indigo-500 rounded-full text-sm font-bold hover:bg-indigo-400 transition">Xem chi tiết</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card min-h-[450px] cursor-pointer reveal group" onclick="openModal('fnb')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                            <div>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">F&B CHAIN</span>
+                                <h3 class="text-3xl font-bold mt-4">Nhà Hàng</h3>
+                                <p class="text-emerald-100 mt-2 opacity-80">Trợ lý ảo kiểm tra giá vốn</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-black mb-2">24/7</div>
+                                <div class="text-sm text-emerald-100 uppercase tracking-widest">Sẵn sàng</div>
+                                <div class="mt-4 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">Telegram Bot</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-slate-800 text-white p-8 shadow-2xl flex flex-col justify-center items-center text-center">
+                            <h4 class="text-xl font-bold text-emerald-400 mb-4">Kết quả chuyển đổi</h4>
+                            <ul class="text-left space-y-4 text-sm text-slate-300 w-full">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tra cứu giá vốn trong 3s
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Cảnh báo giá tăng
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Không cần mở Laptop
+                                </li>
+                            </ul>
+                            <button class="mt-8 px-6 py-2 bg-emerald-500 rounded-full text-sm font-bold hover:bg-emerald-400 transition">Xem chi tiết</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card min-h-[450px] cursor-pointer reveal group" onclick="openModal('twitter')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-sky-500 to-blue-600 text-white p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                            <div>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">CONTENT CREATOR</span>
+                                <h3 class="text-3xl font-bold mt-4">Twitter/X</h3>
+                                <p class="text-sky-100 mt-2 opacity-80">Viral Content Generator</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-black mb-2">3x</div>
+                                <div class="text-sm text-sky-100 uppercase tracking-widest">Tốc độ sản xuất</div>
+                                <div class="mt-4 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">Trend Hunter AI</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-slate-800 text-white p-8 shadow-2xl flex flex-col justify-center items-center text-center">
+                            <h4 class="text-xl font-bold text-sky-400 mb-4">Kết quả chuyển đổi</h4>
+                            <ul class="text-left space-y-4 text-sm text-slate-300 w-full">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tự động quét Trend
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Lên lịch đăng bài giờ vàng
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tăng 40% Engagement
+                                </li>
+                            </ul>
+                            <button class="mt-8 px-6 py-2 bg-sky-500 rounded-full text-sm font-bold hover:bg-sky-400 transition">Xem chi tiết</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-indigo-900 skew-y-3 transform origin-bottom-right z-0"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 text-white">
+            <h2 class="text-4xl md:text-5xl font-black mb-6 reveal">Bạn đã sẵn sàng<br>thoát khỏi vòng lặp?</h2>
+            <p class="text-indigo-200 text-xl mb-12 reveal">Hãy để tôi giúp bạn tiết kiệm 15 giờ/tuần ngay từ hôm nay.</p>
+            
+            <a href="https://zalo.me/0909063196" class="reveal btn-glow inline-flex items-center gap-3 bg-white text-indigo-900 px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-transform">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+                <span>Tư vấn Miễn Phí (Zalo)</span>
+            </a>
+            
+            <div class="mt-12 flex justify-center gap-8 text-indigo-300 reveal">
+                <div class="text-center">
+                    <div class="font-bold text-2xl text-white">50+</div>
+                    <div class="text-sm">Khách hàng</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-bold text-2xl text-white">1000h+</div>
+                    <div class="text-sm">Tiết kiệm/tháng</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-boxlok" class="modal fixed inset-0 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('boxlok')">
+        <div class="modal-content glass-card bg-white max-w-2xl w-full rounded-3xl p-8 relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal('boxlok')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="text-indigo-600 font-bold text-sm tracking-wider">CASE STUDY</span>
+            <h3 class="text-3xl font-black mt-2 mb-6 text-slate-900">Boxlok Logistics</h3>
             
             <div class="space-y-6">
-                <div>
-                    <h4 class="font-bold text-lg mb-3">🎯 Vấn đề</h4>
-                    <p class="text-gray-700">Founder mất 3-4 giờ/tuần để viết blog SEO & tìm hình ảnh. Công việc tốn thời gian, ảnh hưởng đến các công việc quan trọng khác.</p>
+                <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                    <h4 class="font-bold text-red-700 text-sm mb-1">TRƯỚC KHI TỰ ĐỘNG HÓA</h4>
+                    <p class="text-slate-700">CEO mất 4 giờ mỗi sáng thứ 7 để tự viết bài blog, tìm hình ảnh trên Google, và đăng bài thủ công lên Web. Việc này gây mệt mỏi và thường bị trì hoãn.</p>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold text-lg mb-3">💡 Giải pháp</h4>
-                    <p class="text-gray-700 mb-3">Xây dựng workflow tự động hoàn toàn:</p>
-                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                        <li>Nhập keyword vào hệ thống</li>
-                        <li>AI GPT-4 viết bài SEO chuẩn, 1500-2000 từ</li>
-                        <li>DALL-E 3 tạo hình ảnh minh họa chất lượng cao</li>
-                        <li>Tự động đăng lên WordPress</li>
-                        <li>Thông báo hoàn thành qua Telegram</li>
-                    </ol>
+
+                <div class="flex justify-center">
+                    <i class="fa-solid fa-arrow-down text-indigo-300 text-2xl animate-bounce"></i>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold text-lg mb-3">📊 Kết quả</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-green-50 p-4 rounded-xl border-2 border-green-200">
-                            <div class="text-3xl font-black text-green-600">12</div>
-                            <p class="text-sm text-gray-600">Bài blog/tháng</p>
-                        </div>
-                        <div class="bg-blue-50 p-4 rounded-xl border-2 border-blue-200">
-                            <div class="text-3xl font-black text-blue-600">15 phút</div>
-                            <p class="text-sm text-gray-600">Thời gian duyệt</p>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-xl border-2 border-purple-200">
-                            <div class="text-3xl font-black text-purple-600">100%</div>
-                            <p class="text-sm text-gray-600">Tự động hóa</p>
-                        </div>
-                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
-                            <div class="text-3xl font-black text-amber-600">3-4h</div>
-                            <p class="text-sm text-gray-600">Tiết kiệm/tuần</p>
-                        </div>
-                    </div>
+
+                <div class="bg-emerald-50 p-4 rounded-xl border-l-4 border-emerald-500">
+                    <h4 class="font-bold text-emerald-700 text-sm mb-1">GIẢI PHÁP & KẾT QUẢ</h4>
+                    <p class="text-slate-700 mb-4">Hệ thống N8n tự động kết nối GPT-4 để viết bài và DALL-E 3 để tạo ảnh. Bài viết tự động đẩy lên WordPress.</p>
+                    <ul class="grid grid-cols-2 gap-4">
+                        <li class="bg-white p-3 rounded-lg shadow-sm text-center">
+                            <div class="text-2xl font-bold text-emerald-600">15p</div>
+                            <div class="text-xs text-slate-500">Thời gian duyệt bài</div>
+                        </li>
+                        <li class="bg-white p-3 rounded-lg shadow-sm text-center">
+                            <div class="text-2xl font-bold text-emerald-600">x2</div>
+                            <div class="text-xs text-slate-500">Lượng traffic SEO</div>
+                        </li>
+                    </ul>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold text-lg mb-3">🛠️ Tech Stack</h4>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold">n8n Workflow</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold">WordPress API</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold">OpenAI GPT-4</span>
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold">DALL-E 3</span>
-                    </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center">
+                <div class="flex gap-2">
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">n8n</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">OpenAI</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">Wordpress</span>
                 </div>
+                <a href="https://zalo.me/0909063196" class="text-indigo-600 font-bold hover:underline">Tôi muốn làm giống vậy →</a>
             </div>
         </div>
     </div>
-
-    <!-- Similar modals for fnb, hr, twitter -->
-    <div id="modal-fnb" class="modal" onclick="closeModal('fnb')">
-        <div class="modal-content p-8 m-4" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-3xl font-black text-green-600">Chuỗi Nhà Hàng F&B</h3>
-                <button onclick="closeModal('fnb')" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
-            </div>
-            <div class="space-y-6">
-                <div>
-                    <h4 class="font-bold text-lg mb-3">🎯 Vấn đề</h4>
-                    <p class="text-gray-700">Quản lý phải mở laptop tra giá vốn mỗi khi họp. Không thể truy cập dữ liệu khi di chuyển, ảnh hưởng đến quyết định nhanh.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-3">💡 Giải pháp</h4>
-                    <p class="text-gray-700">Xây dựng Telegram Bot trợ lý ảo kết nối với Google Sheets & Database. Trả lời câu hỏi về giá vốn, chi phí, doanh thu realtime. Alert tự động khi có bất thường.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-3">📊 Kết quả</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-green-50 p-4 rounded-xl border-2 border-green-200">
-                            <div class="text-3xl font-black text-green-600">>90%</div>
-                            <p class="text-sm text-gray-600">Độ chính xác</p>
-                        </div>
-                        <div class="bg-blue-50 p-4 rounded-xl border-2 border-blue-200">
-                            <div class="text-3xl font-black text-blue-600">24/7</div>
-                            <p class="text-sm text-gray-600">Sẵn sàng</p>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-xl border-2 border-purple-200">
-                            <div class="text-3xl font-black text-purple-600">15h</div>
-                            <p class="text-sm text-gray-600">Tiết kiệm/tuần</p>
-                        </div>
-                        <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-200">
-                            <div class="text-3xl font-black text-amber-600">📱</div>
-                            <p class="text-sm text-gray-600">Mọi lúc mọi nơi</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-hr" class="modal" onclick="closeModal('hr')">
-        <div class="modal-content p-8 m-4" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-3xl font-black text-blue-600">Quản Lý Nhân Sự</h3>
-                <button onclick="closeModal('hr')" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
-            </div>
-            <div class="space-y-6">
-                <div>
-                    <h4 class="font-bold text-lg mb-3">🎯 Vấn đề</h4>
-                    <p class="text-gray-700">Quản lý 3 phòng ban với workflow riêng. File Excel rời rạc, khó kiểm soát KPI và tiến độ.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-3">💡 Giải pháp</h4>
-                    <p class="text-gray-700">Tích hợp Google Sheets + N8n automation. Sync workflow giữa Content-Designer team. Dashboard KPI realtime. Báo cáo tự động hàng tuần.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-3">📊 Kết quả</h4>
-                    <p class="text-gray-700">Giảm 80% thời gian quản lý. Tiết kiệm chi phí 1 nhân viên HR. Dashboard minh bạch cho 3 phòng ban.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-twitter" class="modal" onclick="closeModal('twitter')">
-        <div class="modal-content p-8 m-4" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-3xl font-black text-sky-600">Twitter Content AI</h3>
-                <button onclick="closeModal('twitter')" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
-            </div>
-            <div class="space-y-6">
-                <div>
-                    <h4 class="font-bold text-lg mb-3">🎯 Vấn đề</h4>
-                    <p class="text-gray-700">Mất 2h/ngày để nghĩ content Crypto, tìm trending topics, và đăng đúng golden time.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-3">💡 Giải pháp</h4>
-                    <p class="text-gray-700">AI scan trending Crypto topics → Generate content + hashtags → Schedule golden time → Track engagement → Optimize content strategy.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-3">📊 Kết quả</h4>
-                    <p class="text-gray-700">Scale 2-3x content output. Tăng 40% engagement. Tiết kiệm 6-8h/tuần. Post 4-5 bài/ngày consistently.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <script>
-        // Scroll Reveal Animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
+        // Reveal on Scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    
-                    // Trigger counter animation
-                    const counters = entry.target.querySelectorAll('.counter');
-                    counters.forEach(counter => animateCounter(counter));
-                    
-                    // Trigger flow line animation
-                    const flowLines = entry.target.querySelectorAll('.flow-line');
-                    flowLines.forEach(line => line.classList.add('active'));
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Observe all reveal elements
-        document.querySelectorAll('.reveal, .flow-line').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Counter Animation
-        function animateCounter(element) {
-            const target = parseInt(element.dataset.target);
-            const duration = 2000;
-            const step = target / (duration / 16);
-            let current = 0;
+        // 3D Tilt Effect for Cards (Desktop Only)
+        document.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Limit the tilt angle
+                const rotateX = ((y - centerY) / 20) * -1; // Invert axis
+                const rotateY = (x - centerX) / 20;
 
-            const timer = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 16);
-        }
+                card.querySelector('.flip-card-inner').style.transform = 
+                    `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
 
-        // Workflow Detail
-        function showWorkflowDetail(step) {
-            const details = {
-                1: {
-                    title: 'Bạn - Người Khởi Đầu',
-                    content: 'Chỉ cần mô tả công việc lặp lại của bạn. Ví dụ: "Tôi phải trả lời 50 email mỗi ngày với nội dung tương tự"'
-                },
-                2: {
-                    title: 'AI Agent - Bộ Não Xử Lý',
-                    content: 'AI phân tích yêu cầu, tự động nhận diện pattern, xử lý logic phức tạp, và thực thi workflow 24/7 không nghỉ'
-                },
-                3: {
-                    title: 'Kết Quả - Hoàn Thành Tự Động',
-                    content: 'Công việc hoàn thành chính xác, nhanh chóng. Bạn chỉ cần duyệt kết quả cuối cùng. Tiết kiệm 80% thời gian.'
-                }
-            };
-            
-            const detail = details[step];
-            alert(`${detail.title}\n\n${detail.content}`);
-        }
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('.flip-card-inner').style.transform = 
+                    'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
 
-        // Modal Functions
+        // Modal Logic
         function openModal(id) {
-            document.getElementById(`modal-${id}`).classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const modal = document.getElementById(`modal-${id}`);
+            if(modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Fallback for demo if other modals aren't coded yet
+                alert("Nội dung chi tiết cho Case Study này sẽ sớm được cập nhật!");
+            }
         }
 
         function closeModal(id) {
-            document.getElementById(`modal-${id}`).classList.remove('active');
-            document.body.style.overflow = 'auto';
+            const modal = document.getElementById(`modal-${id}`);
+            if(modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
         }
 
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Parallax Effect
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrolled = window.pageYOffset;
-                    const parallaxElements = document.querySelectorAll('.animate-float');
-                    parallaxElements.forEach(el => {
-                        const speed = 0.5;
-                        el.style.transform = `translateY(${scrolled * speed}px)`;
-                    });
-                    ticking = false;
-                });
-                ticking = true;
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
             }
-        });
+        }
     </script>
-
 </body>
 </html>
