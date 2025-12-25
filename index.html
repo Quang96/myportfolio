@@ -3,471 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Automation Agency - Demo</title>
+    <title>Tự Động Hóa - Thoát Khỏi Vòng Lặp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
         
-        /* --- CUSTOM STYLES FOR ANIMATIONS --- */
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --neon-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+        }
         
-        /* 1. Workflow Spinner Animation */
-        @keyframes spin-node {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .spinner.active {
-            opacity: 1 !important;
-            animation: spin-node 1s linear infinite;
-        }
-        /* Active Node State */
-        .node-box.active {
-            border-color: #6366f1; /* Indigo-500 */
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
-        }
-        .node-icon.active {
-            color: #6366f1;
-            transform: scale(1.1);
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background-color: #f8fafc;
+            color: #1e293b;
         }
 
-        /* 2. Modal Animation */
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+        /* --- ADVANCED ANIMATIONS --- */
+
+        /* Gradient Text Animation */
+        .text-gradient-animate {
+            background: linear-gradient(to right, #ef4444, #f59e0b, #6366f1, #ef4444);
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s linear infinite;
+        }
+
+        @keyframes gradient-shift {
+            to { background-position: 200% center; }
+        }
+
+        /* Float Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Blob Background */
+        .blob-bg {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            animation: blob-bounce 10s infinite alternate;
+        }
+        @keyframes blob-bounce {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        /* 3D Tilt Effect Base */
+        .tilt-card {
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* Reveal on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger Children */
+        .stagger-parent .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-parent .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-parent .reveal:nth-child(3) { transition-delay: 0.3s; }
+
+        /* Button Glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: var(--neon-shadow);
+            transform: translateY(-2px);
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after { left: 100%; }
+
+        /* Progress Bar Animation */
+        @keyframes fill-bar {
+            from { width: 0; }
+            to { width: var(--w); }
+        }
+        .progress-fill {
+            width: 0;
+            animation: fill-bar 1.5s ease-out forwards;
+        }
+
+        /* Flip Card */
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+        .flip-card-back { transform: rotateY(180deg); }
+
+        /* Modal */
         .modal {
-            transition: opacity 0.3s ease-in-out;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
         }
         .modal-content {
-            transform: scale(0.95);
-            transition: transform 0.3s ease-out;
+            animation: modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .modal.open .modal-content {
-            transform: scale(1);
+        @keyframes modal-pop {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
-        
-        /* Smooth Scroll */
-        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="relative">
 
-    <section class="py-20 text-center bg-white border-b border-slate-200">
-        <h1 class="text-4xl md:text-5xl font-black mb-4 text-indigo-900">AI Automation Agency</h1>
-        <p class="text-lg text-slate-500 max-w-2xl mx-auto">Tự động hóa doanh nghiệp của bạn với quy trình thông minh, tiết kiệm thời gian và tối ưu chi phí.</p>
-    </section>
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="blob-bg w-96 h-96 bg-purple-300 rounded-full top-0 left-0 mix-blend-multiply opacity-50"></div>
+        <div class="blob-bg w-96 h-96 bg-yellow-200 rounded-full top-0 right-0 mix-blend-multiply opacity-50 animation-delay-2000"></div>
+        <div class="blob-bg w-96 h-96 bg-pink-300 rounded-full -bottom-32 left-20 mix-blend-multiply opacity-50 animation-delay-4000"></div>
+    </div>
 
-    <section class="py-16 bg-slate-50 overflow-hidden">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-black mb-12 text-slate-800">Quy trình Hoạt động</h2>
+    <section class="min-h-screen flex flex-col justify-center items-center relative px-6 pt-20 pb-10">
+        <div class="max-w-5xl mx-auto text-center z-10">
             
-            <div class="relative flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0" id="workflow-container">
-                
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-200 -z-10 transform -translate-y-1/2 rounded-full"></div>
-                
-                <div class="hidden md:block absolute top-1/2 left-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 -z-0 transform -translate-y-1/2 transition-all duration-1000 ease-linear rounded-full" id="flow-line" style="width: 0%"></div>
-    
-                <div class="workflow-node relative group w-24 h-24" data-step="1">
-                    <div class="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-slate-200 flex items-center justify-center z-10 transition-all duration-300 node-box">
-                        <i class="fa-solid fa-bolt text-3xl text-slate-300 transition-colors duration-300 node-icon"></i>
+            <div class="reveal inline-block mb-6 px-4 py-2 rounded-full glass-card border-indigo-200 bg-white/50">
+                <span class="text-indigo-600 font-bold tracking-wider text-sm">🚀 AUTOMATION AGENCY</span>
+            </div>
+
+            <h1 class="reveal text-6xl md:text-8xl font-black leading-tight mb-8 tracking-tight" style="transition-delay: 0.1s;">
+                Kẻ trộm
+                <br>
+                <span class="text-gradient-animate">thời gian lớn nhất</span>
+            </h1>
+
+            <p class="reveal text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto font-light" style="transition-delay: 0.2s;">
+                Không phải mạng xã hội. Đó là những công việc <strong class="text-slate-900 font-bold">nhỏ nhặt, lặp đi lặp lại</strong> đang âm thầm lấy đi 15h/tuần của bạn.
+            </p>
+
+            <div class="reveal flex flex-col sm:flex-row gap-4 justify-center items-center" style="transition-delay: 0.3s;">
+                <a href="#solution" class="btn-glow px-8 py-4 bg-indigo-600 text-white rounded-full font-bold text-lg shadow-lg hover:bg-indigo-700 transition-colors flex items-center gap-2 group">
+                    <span>Xử lý ngay</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#problem" class="px-8 py-4 text-slate-600 font-medium hover:text-indigo-600 transition-colors">
+                    Tìm hiểu thêm ↓
+                </a>
+            </div>
+
+            <div class="relative mt-20 w-full max-w-4xl mx-auto h-24 reveal" style="transition-delay: 0.4s;">
+                <div class="absolute left-10 md:left-20 animate-float" style="animation-delay: 0s;">
+                    <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-red-500 font-bold transform rotate-[-6deg]">
+                        <i class="fa-solid fa-envelope"></i> 2h Email
                     </div>
-                    <div class="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-indigo-500 border-r-indigo-500 opacity-0 spinner" style="transition: opacity 0.3s;"></div>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-slate-500 whitespace-nowrap">Input / Trigger</div>
                 </div>
-    
-                <i class="fa-solid fa-arrow-down md:hidden text-slate-300 animate-bounce"></i>
-    
-                <div class="workflow-node relative group w-24 h-24" data-step="2">
-                    <div class="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-slate-200 flex items-center justify-center z-10 transition-all duration-300 node-box">
-                        <i class="fa-solid fa-brain text-3xl text-slate-300 transition-colors duration-300 node-icon"></i>
+                <div class="absolute right-10 md:right-20 animate-float" style="animation-delay: 1s;">
+                    <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-orange-500 font-bold transform rotate-[6deg]">
+                        <i class="fa-solid fa-file-excel"></i> 3h Excel
                     </div>
-                    <div class="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-purple-500 border-r-purple-500 opacity-0 spinner"></div>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-slate-500 whitespace-nowrap">AI Processing</div>
                 </div>
-    
-                <i class="fa-solid fa-arrow-down md:hidden text-slate-300 animate-bounce"></i>
-    
-                <div class="workflow-node relative group w-24 h-24" data-step="3">
-                    <div class="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-slate-200 flex items-center justify-center z-10 transition-all duration-300 node-box">
-                        <i class="fa-solid fa-paper-plane text-3xl text-slate-300 transition-colors duration-300 node-icon"></i>
+                <div class="absolute left-1/2 top-10 transform -translate-x-1/2 animate-float" style="animation-delay: 2s;">
+                    <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-blue-500 font-bold">
+                        <i class="fa-solid fa-comment-dots"></i> 1.5h Support
                     </div>
-                    <div class="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-green-500 border-r-green-500 opacity-0 spinner"></div>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-slate-500 whitespace-nowrap">Output / Action</div>
                 </div>
-    
             </div>
         </div>
     </section>
 
-    <section id="comparison" class="py-24 bg-white">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-black text-center mb-16 text-slate-800">Sự khác biệt rõ rệt</h2>
-    
-            <div class="relative w-full max-w-3xl mx-auto h-[450px] md:h-[400px] perspective-1000 group">
-                
-                <div class="absolute inset-0 bg-white border-2 border-red-100 rounded-3xl shadow-xl p-8 transition-all duration-700 ease-in-out transform origin-left z-20 overflow-hidden" id="card-old">
-                    <div class="absolute top-0 left-0 w-2 h-full bg-red-500"></div>
+    <section id="problem" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-black text-center mb-16 reveal">
+                Một ngày của bạn
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-16 items-stretch">
+                <div class="reveal glass-card p-8 rounded-3xl border-l-8 border-red-400 relative overflow-hidden group hover:shadow-xl transition-all">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl group-hover:scale-110 transition-transform select-none">😰</div>
                     
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-2xl font-bold text-red-600">Cách làm thủ công</h3>
-                        <span class="text-4xl animate-pulse">😰</span>
-                    </div>
-    
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Thủ Công (Cũ)</h3>
+                    <p class="text-red-500 font-medium mb-8">Căng thẳng & Lãng phí</p>
+
                     <div class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500 shrink-0"><i class="fa-regular fa-envelope"></i></div>
-                            <div class="flex-1">
-                                <div class="h-3 bg-red-50 rounded w-3/4 mb-2"></div>
-                                <p class="text-sm text-slate-500">Check mail & Rep inbox (2h/ngày)</p>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">Check & Reply Email</span>
+                                <span class="text-sm font-bold text-red-500">2h/ngày</span>
+                            </div>
+                            <div class="h-2 bg-red-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500 rounded-full progress-fill" style="--w: 100%"></div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500 shrink-0"><i class="fa-solid fa-table"></i></div>
-                            <div class="flex-1">
-                                <div class="h-3 bg-red-50 rounded w-1/2 mb-2"></div>
-                                <p class="text-sm text-slate-500">Nhập liệu Excel thủ công (3h/ngày)</p>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">Nhập liệu Excel</span>
+                                <span class="text-sm font-bold text-red-500">1.5h/ngày</span>
+                            </div>
+                            <div class="h-2 bg-red-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500 rounded-full progress-fill" style="--w: 80%; animation-delay: 0.2s"></div>
                             </div>
                         </div>
-                        <div class="mt-8 pt-4 border-t border-red-100 text-center text-red-400 font-medium">
-                            Tổng lãng phí: <span class="font-bold text-red-600 text-lg">25 giờ/tuần</span>
+                        <div class="mt-8 bg-red-50 p-4 rounded-xl text-center border border-red-100">
+                            <span class="block text-3xl font-black text-red-600">Mất 15h+</span>
+                            <span class="text-sm text-red-400">mỗi tuần cho việc lặp lại</span>
                         </div>
-                    </div>
-                    
-                    <div class="absolute inset-0 bg-white/90 backdrop-blur-sm opacity-0 transition-opacity duration-500 flex items-center justify-center pointer-events-none" id="overlay-old">
-                        <span class="text-slate-400 font-bold text-xl">Đang chuyển đổi...</span>
                     </div>
                 </div>
-    
-                <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-white border-2 border-indigo-200 rounded-3xl shadow-2xl p-8 transition-all duration-700 ease-in-out transform scale-95 opacity-50 z-10" id="card-new">
-                    <div class="absolute top-0 left-0 w-2 h-full bg-indigo-500"></div>
+
+                <div class="reveal glass-card p-8 rounded-3xl border-l-8 border-emerald-400 relative overflow-hidden group hover:shadow-xl transition-all" style="transition-delay: 0.2s;">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl group-hover:scale-110 transition-transform select-none">😎</div>
                     
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-2xl font-bold text-indigo-600">Dùng Automation AI</h3>
-                        <span class="text-4xl">😎</span>
-                    </div>
-    
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Với AI Automation</h3>
+                    <p class="text-emerald-500 font-medium mb-8">Tự động & Chính xác</p>
+
                     <div class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 shrink-0"><i class="fa-solid fa-robot"></i></div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="font-bold text-slate-800">Tự động 100%</span>
-                                    <i class="fa-solid fa-check-circle text-green-500"></i>
-                                </div>
-                                <p class="text-sm text-slate-500">AI tự trả lời & chốt lịch hẹn</p>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">AI xử lý Email</span>
+                                <span class="text-sm font-bold text-emerald-500">5 phút</span>
+                            </div>
+                            <div class="h-2 bg-emerald-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 rounded-full progress-fill" style="--w: 10%"></div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 shrink-0"><i class="fa-solid fa-bolt"></i></div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="font-bold text-slate-800">Realtime Sync</span>
-                                    <i class="fa-solid fa-check-circle text-green-500"></i>
-                                </div>
-                                <p class="text-sm text-slate-500">Dữ liệu tự đổ về CRM/Sheet</p>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-semibold">Auto-sync Data</span>
+                                <span class="text-sm font-bold text-emerald-500">0 phút</span>
+                            </div>
+                            <div class="h-2 bg-emerald-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 rounded-full progress-fill" style="--w: 2%; animation-delay: 0.2s"></div>
                             </div>
                         </div>
-                        <div class="mt-8 pt-4 border-t border-indigo-100 text-center text-indigo-600 font-medium">
-                            Bạn dư ra: <span class="font-bold text-2xl text-indigo-700">25 giờ/tuần</span> để chill
+                        <div class="mt-8 bg-emerald-50 p-4 rounded-xl text-center border border-emerald-100 shadow-sm">
+                            <span class="block text-3xl font-black text-emerald-600">Tiết kiệm 90%</span>
+                            <span class="text-sm text-emerald-500">thời gian làm việc</span>
                         </div>
                     </div>
-                </div>
-    
-            </div>
-            
-            <div class="text-center mt-10">
-                <button onclick="toggleComparison()" class="bg-slate-800 text-white px-8 py-3 rounded-full hover:bg-slate-700 hover:shadow-lg transition-all transform hover:-translate-y-1 flex items-center gap-2 mx-auto font-bold">
-                    <i class="fa-solid fa-wand-magic-sparkles text-yellow-400"></i> Xem sự thay đổi
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-slate-50">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-black mb-12 text-slate-800 text-center">Dự án Thực tế</h2>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group overflow-hidden border border-slate-200" onclick="openModal('boxlok')">
-                    <div class="h-48 bg-slate-200 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-indigo-900 flex items-center justify-center text-white/20">
-                           <i class="fa-solid fa-truck-fast text-6xl group-hover:scale-110 transition-transform duration-500"></i>
-                        </div>
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-indigo-600">
-                            SEO Automation
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-600 transition-colors">Boxlok Logistics</h3>
-                        <p class="text-slate-500 text-sm mb-4 line-clamp-2">Hệ thống tự động viết bài chuẩn SEO và quản lý vận đơn, giúp tiết kiệm 90% thời gian nhân sự.</p>
-                        <div class="flex items-center text-indigo-600 font-bold text-sm">
-                            Xem chi tiết <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center items-center text-center opacity-60">
-                    <i class="fa-solid fa-hammer text-4xl text-slate-300 mb-4"></i>
-                    <h3 class="font-bold text-slate-400">Dự án Bất động sản</h3>
-                    <p class="text-sm text-slate-400">Coming soon...</p>
-                </div>
-                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center items-center text-center opacity-60">
-                    <i class="fa-solid fa-user-doctor text-4xl text-slate-300 mb-4"></i>
-                    <h3 class="font-bold text-slate-400">Dự án Nha Khoa</h3>
-                    <p class="text-sm text-slate-400">Coming soon...</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-sm">
-        <p>&copy; 2024 AI Automation Agency. All rights reserved.</p>
-    </footer>
+    <section id="solution" class="py-24 bg-white/50 backdrop-blur-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-black text-center mb-6 reveal">
+                Kết quả thực tế
+            </h2>
+            <p class="text-center text-slate-500 mb-16 reveal">Di chuột vào thẻ để xem chi tiết</p>
 
-    <div id="modal-boxlok" class="modal fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity" onclick="closeModal('boxlok')"></div>
-    
-        <div class="modal-content bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
-            
-            <div class="bg-indigo-600 p-6 flex justify-between items-center text-white sticky top-0 z-20 shrink-0">
-                <div class="flex items-center gap-4">
-                    <div class="bg-white p-2 rounded-lg text-indigo-600">
-                        <i class="fa-solid fa-cube text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl md:text-2xl font-bold">Boxlok Logistics</h3>
-                        <p class="text-indigo-200 text-xs md:text-sm">Hệ thống SEO & Content Automation</p>
-                    </div>
-                </div>
-                <button onclick="closeModal('boxlok')" class="text-white/70 hover:text-white text-3xl transition-colors">&times;</button>
-            </div>
-    
-            <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-parent">
                 
-                <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-8">
-                    <div class="bg-red-50 rounded-2xl p-6 border border-red-100">
-                        <h4 class="flex items-center gap-2 text-red-700 font-bold mb-4">
-                            <i class="fa-solid fa-triangle-exclamation"></i> VẤN ĐỀ CŨ
-                        </h4>
-                        <ul class="space-y-3 text-slate-700 text-sm md:text-base">
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-red-400 text-xs"><i class="fa-solid fa-circle"></i></span>
-                                <span>CEO mất <strong>4 giờ/tuần</strong> viết bài thủ công.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-red-400 text-xs"><i class="fa-solid fa-circle"></i></span>
-                                <span>Tốn 5-7 triệu/tháng thuê viết bài ngoài.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-red-400 text-xs"><i class="fa-solid fa-circle"></i></span>
-                                <span>Nội dung không đồng bộ, SEO lên xuống thất thường.</span>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
-                        <h4 class="flex items-center gap-2 text-emerald-700 font-bold mb-4">
-                            <i class="fa-solid fa-microchip"></i> GIẢI PHÁP MỚI
-                        </h4>
-                        <ul class="space-y-3 text-slate-700 text-sm md:text-base">
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-emerald-500"><i class="fa-solid fa-check"></i></span>
-                                <span>Workflow <strong>n8n</strong> + GPT-4 tự động viết.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-emerald-500"><i class="fa-solid fa-check"></i></span>
-                                <span>Tự nghiên cứu từ khóa & post lên WordPress.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-emerald-500"><i class="fa-solid fa-check"></i></span>
-                                <span>DALL-E 3 tự vẽ ảnh bìa theo chủ đề bài viết.</span>
-                            </li>
-                        </ul>
+                <div class="flip-card min-h-[450px] cursor-pointer reveal group" onclick="openModal('boxlok')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-indigo-500 to-violet-600 text-white p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                            <div>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">LOGISTICS</span>
+                                <h3 class="text-3xl font-bold mt-4">Boxlok</h3>
+                                <p class="text-indigo-100 mt-2 opacity-80">Tự động viết Blog & SEO</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-black mb-2">12</div>
+                                <div class="text-sm text-indigo-100 uppercase tracking-widest">Bài viết/tháng</div>
+                                <div class="mt-4 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">100% Tự động</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-slate-800 text-white p-8 shadow-2xl flex flex-col justify-center items-center text-center">
+                            <h4 class="text-xl font-bold text-indigo-400 mb-4">Kết quả chuyển đổi</h4>
+                            <ul class="text-left space-y-4 text-sm text-slate-300 w-full">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tiết kiệm 4h/tuần
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Hình ảnh AI tạo tự động
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Auto post WordPress
+                                </li>
+                            </ul>
+                            <button class="mt-8 px-6 py-2 bg-indigo-500 rounded-full text-sm font-bold hover:bg-indigo-400 transition">Xem chi tiết</button>
+                        </div>
                     </div>
                 </div>
-    
-                <h4 class="text-slate-400 font-bold text-xs tracking-widest mb-4 uppercase">Hiệu quả thực tế</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-2xl md:text-3xl font-black text-indigo-600 mb-1">12</div>
-                        <div class="text-xs text-slate-500">Bài viết / tháng</div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-2xl md:text-3xl font-black text-green-600 mb-1">15p</div>
-                        <div class="text-xs text-slate-500">Thời gian duyệt</div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-2xl md:text-3xl font-black text-blue-600 mb-1">Top 3</div>
-                        <div class="text-xs text-slate-500">Thứ hạng Google</div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-2xl md:text-3xl font-black text-orange-600 mb-1">0đ</div>
-                        <div class="text-xs text-slate-500">Chi phí nhân sự</div>
+
+                <div class="flip-card min-h-[450px] cursor-pointer reveal group" onclick="openModal('fnb')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                            <div>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">F&B CHAIN</span>
+                                <h3 class="text-3xl font-bold mt-4">Nhà Hàng</h3>
+                                <p class="text-emerald-100 mt-2 opacity-80">Trợ lý ảo kiểm tra giá vốn</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-black mb-2">24/7</div>
+                                <div class="text-sm text-emerald-100 uppercase tracking-widest">Sẵn sàng</div>
+                                <div class="mt-4 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">Telegram Bot</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-slate-800 text-white p-8 shadow-2xl flex flex-col justify-center items-center text-center">
+                            <h4 class="text-xl font-bold text-emerald-400 mb-4">Kết quả chuyển đổi</h4>
+                            <ul class="text-left space-y-4 text-sm text-slate-300 w-full">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tra cứu giá vốn trong 3s
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Cảnh báo giá tăng
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Không cần mở Laptop
+                                </li>
+                            </ul>
+                            <button class="mt-8 px-6 py-2 bg-emerald-500 rounded-full text-sm font-bold hover:bg-emerald-400 transition">Xem chi tiết</button>
+                        </div>
                     </div>
                 </div>
-    
-                <div class="border-t border-slate-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="flex gap-2 flex-wrap justify-center md:justify-start">
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">n8n</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">OpenAI API</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">WordPress</span>
+
+                <div class="flip-card min-h-[450px] cursor-pointer reveal group" onclick="openModal('twitter')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-sky-500 to-blue-600 text-white p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                            <div>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">CONTENT CREATOR</span>
+                                <h3 class="text-3xl font-bold mt-4">Twitter/X</h3>
+                                <p class="text-sky-100 mt-2 opacity-80">Viral Content Generator</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-black mb-2">3x</div>
+                                <div class="text-sm text-sky-100 uppercase tracking-widest">Tốc độ sản xuất</div>
+                                <div class="mt-4 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">Trend Hunter AI</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back bg-slate-800 text-white p-8 shadow-2xl flex flex-col justify-center items-center text-center">
+                            <h4 class="text-xl font-bold text-sky-400 mb-4">Kết quả chuyển đổi</h4>
+                            <ul class="text-left space-y-4 text-sm text-slate-300 w-full">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tự động quét Trend
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Lên lịch đăng bài giờ vàng
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-green-400"></i> Tăng 40% Engagement
+                                </li>
+                            </ul>
+                            <button class="mt-8 px-6 py-2 bg-sky-500 rounded-full text-sm font-bold hover:bg-sky-400 transition">Xem chi tiết</button>
+                        </div>
                     </div>
-                    <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 shrink-0">
-                        Triển khai ngay
-                    </button>
                 </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-indigo-900 skew-y-3 transform origin-bottom-right z-0"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 text-white">
+            <h2 class="text-4xl md:text-5xl font-black mb-6 reveal">Bạn đã sẵn sàng<br>thoát khỏi vòng lặp?</h2>
+            <p class="text-indigo-200 text-xl mb-12 reveal">Hãy để tôi giúp bạn tiết kiệm 15 giờ/tuần ngay từ hôm nay.</p>
+            
+            <a href="https://zalo.me/0909063196" class="reveal btn-glow inline-flex items-center gap-3 bg-white text-indigo-900 px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-transform">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+                <span>Tư vấn Miễn Phí (Zalo)</span>
+            </a>
+            
+            <div class="mt-12 flex justify-center gap-8 text-indigo-300 reveal">
+                <div class="text-center">
+                    <div class="font-bold text-2xl text-white">50+</div>
+                    <div class="text-sm">Khách hàng</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-bold text-2xl text-white">1000h+</div>
+                    <div class="text-sm">Tiết kiệm/tháng</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-boxlok" class="modal fixed inset-0 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('boxlok')">
+        <div class="modal-content glass-card bg-white max-w-2xl w-full rounded-3xl p-8 relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal('boxlok')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="text-indigo-600 font-bold text-sm tracking-wider">CASE STUDY</span>
+            <h3 class="text-3xl font-black mt-2 mb-6 text-slate-900">Boxlok Logistics</h3>
+            
+            <div class="space-y-6">
+                <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                    <h4 class="font-bold text-red-700 text-sm mb-1">TRƯỚC KHI TỰ ĐỘNG HÓA</h4>
+                    <p class="text-slate-700">CEO mất 4 giờ mỗi sáng thứ 7 để tự viết bài blog, tìm hình ảnh trên Google, và đăng bài thủ công lên Web. Việc này gây mệt mỏi và thường bị trì hoãn.</p>
+                </div>
+
+                <div class="flex justify-center">
+                    <i class="fa-solid fa-arrow-down text-indigo-300 text-2xl animate-bounce"></i>
+                </div>
+
+                <div class="bg-emerald-50 p-4 rounded-xl border-l-4 border-emerald-500">
+                    <h4 class="font-bold text-emerald-700 text-sm mb-1">GIẢI PHÁP & KẾT QUẢ</h4>
+                    <p class="text-slate-700 mb-4">Hệ thống N8n tự động kết nối GPT-4 để viết bài và DALL-E 3 để tạo ảnh. Bài viết tự động đẩy lên WordPress.</p>
+                    <ul class="grid grid-cols-2 gap-4">
+                        <li class="bg-white p-3 rounded-lg shadow-sm text-center">
+                            <div class="text-2xl font-bold text-emerald-600">15p</div>
+                            <div class="text-xs text-slate-500">Thời gian duyệt bài</div>
+                        </li>
+                        <li class="bg-white p-3 rounded-lg shadow-sm text-center">
+                            <div class="text-2xl font-bold text-emerald-600">x2</div>
+                            <div class="text-xs text-slate-500">Lượng traffic SEO</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center">
+                <div class="flex gap-2">
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">n8n</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">OpenAI</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">Wordpress</span>
+                </div>
+                <a href="https://zalo.me/0909063196" class="text-indigo-600 font-bold hover:underline">Tôi muốn làm giống vậy →</a>
             </div>
         </div>
     </div>
-
+    
     <script>
-        // --- 1. MODAL LOGIC ---
+        // Reveal on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 3D Tilt Effect for Cards (Desktop Only)
+        document.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Limit the tilt angle
+                const rotateX = ((y - centerY) / 20) * -1; // Invert axis
+                const rotateY = (x - centerX) / 20;
+
+                card.querySelector('.flip-card-inner').style.transform = 
+                    `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('.flip-card-inner').style.transform = 
+                    'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Modal Logic
         function openModal(id) {
-            const modal = document.getElementById('modal-' + id);
-            if (modal) {
+            const modal = document.getElementById(`modal-${id}`);
+            if(modal) {
                 modal.classList.remove('hidden');
-                // Small timeout to allow removing hidden before adding opacity for transition
-                setTimeout(() => {
-                    modal.classList.add('open');
-                }, 10);
-                document.body.style.overflow = 'hidden'; // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Fallback for demo if other modals aren't coded yet
+                alert("Nội dung chi tiết cho Case Study này sẽ sớm được cập nhật!");
             }
         }
 
         function closeModal(id) {
-            const modal = document.getElementById('modal-' + id);
-            if (modal) {
-                modal.classList.remove('open');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = ''; // Restore body scroll
-                }, 300); // Wait for transition
+            const modal = document.getElementById(`modal-${id}`);
+            if(modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
             }
         }
 
-        // Close on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                const modals = document.querySelectorAll('.modal:not(.hidden)');
-                modals.forEach(modal => {
-                    closeModal(modal.id.replace('modal-', ''));
-                });
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
             }
-        });
-
-        // --- 2. COMPARISON SLIDER LOGIC ---
-        let isAutomated = false;
-        function toggleComparison() {
-            const cardOld = document.getElementById('card-old');
-            const cardNew = document.getElementById('card-new');
-            const overlayOld = document.getElementById('overlay-old');
-            const btnIcon = document.querySelector('button i.fa-wand-magic-sparkles');
-
-            if (!isAutomated) {
-                // Action: Transform to New
-                overlayOld.classList.remove('opacity-0'); 
-                
-                setTimeout(() => {
-                    // Slide Old Card Away
-                    cardOld.style.transform = "translateX(120%) rotate(5deg)";
-                    cardOld.style.opacity = "0";
-                    
-                    // Bring New Card Front
-                    cardNew.style.transform = "scale(1)";
-                    cardNew.style.opacity = "1";
-                    cardNew.style.zIndex = "30";
-                }, 600);
-                
-            } else {
-                // Action: Reset
-                cardOld.style.transform = "translateX(0) rotate(0)";
-                cardOld.style.opacity = "1";
-                overlayOld.classList.add('opacity-0');
-                
-                cardNew.style.transform = "scale(0.95)";
-                cardNew.style.opacity = "0.5";
-                cardNew.style.zIndex = "10";
-            }
-            isAutomated = !isAutomated;
         }
-
-        // --- 3. N8N WORKFLOW ANIMATION ---
-        function runWorkflowAnimation() {
-            const nodes = document.querySelectorAll('.workflow-node');
-            const flowLine = document.getElementById('flow-line');
-            const totalSteps = nodes.length;
-            
-            // Reset state
-            flowLine.style.width = '0%';
-            nodes.forEach(node => {
-                const box = node.querySelector('.node-box');
-                const icon = node.querySelector('.node-icon');
-                const spinner = node.querySelector('.spinner');
-                
-                box.classList.remove('active');
-                icon.classList.remove('active');
-                spinner.classList.remove('active');
-            });
-
-            let currentStep = 0;
-
-            function activateStep() {
-                if (currentStep >= totalSteps) {
-                    // Loop finishes
-                    setTimeout(() => {
-                        // Reset cleanly
-                        nodes.forEach(node => {
-                            node.querySelector('.node-box').classList.remove('active');
-                            node.querySelector('.node-icon').classList.remove('active');
-                            node.querySelector('.spinner').classList.remove('active');
-                        });
-                        flowLine.style.width = '0%'; 
-                        setTimeout(runWorkflowAnimation, 500); // Restart
-                    }, 2000);
-                    return;
-                }
-
-                const node = nodes[currentStep];
-                const box = node.querySelector('.node-box');
-                const icon = node.querySelector('.node-icon');
-                const spinner = node.querySelector('.spinner');
-
-                // Activate Node
-                box.classList.add('active');
-                icon.classList.add('active');
-                spinner.classList.add('active');
-
-                // Move Line to next node
-                if (currentStep < totalSteps - 1) {
-                    const progress = ((currentStep + 1) / (totalSteps - 1)) * 100;
-                    setTimeout(() => {
-                        flowLine.style.width = `${progress}%`;
-                        spinner.classList.remove('active'); // Stop spinning when data moves
-                    }, 1000);
-                } else {
-                    setTimeout(() => {
-                        spinner.classList.remove('active');
-                    }, 1000);
-                }
-
-                currentStep++;
-                setTimeout(activateStep, 1200); 
-            }
-
-            activateStep();
-        }
-
-        // Trigger animation when visible
-        const workflowSection = document.getElementById('workflow-container');
-        const workflowObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    runWorkflowAnimation();
-                    workflowObserver.unobserve(entry.target); 
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        if(workflowSection) workflowObserver.observe(workflowSection);
-
     </script>
 </body>
 </html>
