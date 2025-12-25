@@ -1,297 +1,4 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giải Pháp Tự Động Hóa & AI - Thoát Khỏi Vòng Lặp</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes flowHorizontal {
-            0% { left: 0; opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { left: 100%; opacity: 0; }
-        }
-        
-        .animate-fade-in-down { animation: fadeInDown 0.8s ease; }
-        .animate-fade-in-up { animation: fadeInUp 0.8s ease; }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .connector::after {
-            content: '';
-            position: absolute;
-            width: 8px; height: 8px;
-            background: #6366f1;
-            border-radius: 50%;
-            top: -3px; left: 0;
-            box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
-            animation: flowHorizontal 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        
-        .accordion-content.active {
-            max-height: 2000px;
-            transition: max-height 0.5s ease-in;
-        }
-
-        .bg-grid {
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-    </style>
-</head>
-<body class="bg-white text-gray-900 antialiased">
-
-    <!-- Background Grid -->
-    <div class="fixed inset-0 bg-grid opacity-60 -z-10"></div>
-
-    <!-- HERO SECTION - Optimized for Mobile -->
-    <section class="bg-gradient-to-b from-gray-50 to-white py-12 md:py-20">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <!-- Badge -->
-            <div class="inline-block bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-900 px-5 py-2 rounded-full text-sm font-bold mb-6 shadow-md animate-fade-in-down">
-                🚀 Giải pháp Tự động hóa Doanh nghiệp
-            </div>
-            
-            <!-- Headline - Shorter for mobile -->
-            <h1 class="text-3xl md:text-5xl font-black mb-4 md:mb-6 leading-tight">
-                <span class="gradient-text">Kẻ trộm thời gian</span> lớn nhất<br class="hidden md:block">
-                là công việc lặp đi lặp lại
-            </h1>
-            
-            <!-- Examples tags - Compact -->
-            <div class="flex flex-wrap gap-2 justify-center mb-4">
-                <span class="bg-white border-2 border-red-200 text-red-900 px-3 py-1.5 rounded-full text-sm font-semibold">📧 Email</span>
-                <span class="bg-white border-2 border-red-200 text-red-900 px-3 py-1.5 rounded-full text-sm font-semibold">📊 Excel</span>
-                <span class="bg-white border-2 border-red-200 text-red-900 px-3 py-1.5 rounded-full text-sm font-semibold">💬 Zalo</span>
-            </div>
-            
-            <!-- Subtitle - Shorter -->
-            <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-6">
-                5 phút mỗi task × 180 lần/tháng = <strong>15 giờ/tuần</strong> biến mất.<br>
-                Bạn <strong>bận rộn</strong> nhưng không <strong>tiến bộ</strong>.
-            </p>
-            
-            <!-- CTA - Prominent -->
-            <div class="text-xl md:text-2xl font-extrabold text-indigo-600">
-                ⚡ Đã đến lúc thoát khỏi vòng lặp.
-            </div>
-        </div>
-    </section>
-
-    <!-- WORKFLOW DIAGRAM - Responsive -->
-    <section class="max-w-6xl mx-auto px-6 py-12">
-        <div class="flex flex-col md:flex-row items-center justify-center gap-0">
-            <!-- Manual -->
-            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 w-full md:w-80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all relative before:absolute before:top-0 before:left-6 before:right-6 before:h-1 before:bg-amber-500 before:rounded-b">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center text-white shadow">
-                        <i class="fa-regular fa-hand"></i>
-                    </div>
-                    <h3 class="font-bold text-sm uppercase tracking-wide">Cách Cũ</h3>
-                </div>
-                <p class="text-sm text-gray-600">
-                    Check Zalo → Copy Excel → Email từng khách.<br>
-                    <strong>Tốn: 3 giờ/ngày.</strong>
-                </p>
-            </div>
-
-            <!-- Connector -->
-            <div class="h-10 w-0.5 md:h-0.5 md:w-16 bg-gray-300 relative connector"></div>
-
-            <!-- AI Process -->
-            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 w-full md:w-80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all relative before:absolute before:top-0 before:left-6 before:right-6 before:h-1 before:bg-indigo-600 before:rounded-b">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-lg flex items-center justify-center text-white shadow">
-                        <i class="fa-solid fa-microchip"></i>
-                    </div>
-                    <h3 class="font-bold text-sm uppercase tracking-wide">AI Agent</h3>
-                </div>
-                <p class="text-sm text-gray-600">
-                    Tự động nhận diện, xử lý logic và thực thi 24/7.
-                </p>
-            </div>
-
-            <!-- Connector -->
-            <div class="h-10 w-0.5 md:h-0.5 md:w-16 bg-gray-300 relative connector"></div>
-
-            <!-- Success -->
-            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 w-full md:w-80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all relative before:absolute before:top-0 before:left-6 before:right-6 before:h-1 before:bg-green-500 before:rounded-b">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center text-white shadow">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <h3 class="font-bold text-sm uppercase tracking-wide">Kết Quả</h3>
-                </div>
-                <p class="text-sm text-gray-600">
-                    Bạn chỉ cần duyệt. Máy làm hết.<br>
-                    <strong class="text-green-600">Tiết kiệm 80% thời gian.</strong>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROJECTS SECTION - Accordion -->
-    <section class="bg-gradient-to-b from-white to-gray-50 py-16">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black mb-4 bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
-                    Hệ thống thực tế đã triển khai
-                </h2>
-                <p class="text-gray-600">Không chỉ là lý thuyết, đây là những con số thật từ khách hàng thực tế.</p>
-            </div>
-
-            <div class="space-y-4">
-                
-                <!-- Project 1: Boxlok - Accordion -->
-                <div class="bg-white border-3 border-indigo-600 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all">
-                    <button onclick="toggleAccordion('project1')" class="w-full p-6 text-left flex justify-between items-center bg-gradient-to-r from-indigo-50 to-white hover:from-indigo-100 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <img src="https://boxnlok.vn/web_images/logo.svg" alt="Boxlok" class="w-20 h-auto">
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <h3 class="text-lg font-bold text-indigo-900">✨ Boxlok Logistics</h3>
-                                    <span class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs px-3 py-1 rounded-full font-bold">⭐ FEATURED</span>
-                                </div>
-                                <p class="text-sm text-gray-600">AI viết blog SEO + tạo ảnh + đăng WordPress tự động</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-2xl text-indigo-600 transform transition-transform duration-300" id="icon-project1"></i>
-                    </button>
-                    
-                    <div id="project1" class="accordion-content">
-                        <div class="p-6 bg-gray-50 border-t border-gray-200">
-                            <!-- Before/After -->
-                            <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                <div>
-                                    <span class="text-xs font-bold text-red-700 uppercase tracking-wide block mb-2">⚠️ Trước đây</span>
-                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-900">
-                                        Founder mất <strong>3-4 giờ/tuần</strong> để viết bài blog SEO và tìm hình ảnh minh họa. Phải tự nghĩ ý tưởng, viết content, tìm ảnh rồi đăng lên WordPress.
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wide block mb-2">✅ Giải pháp AI</span>
-                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-sm text-green-900">
-                                        <strong>Workflow hoàn toàn tự động:</strong> Nhập keyword → AI viết bài chuẩn SEO + AI tạo ảnh minh họa → Tự động đăng lên WordPress → Thông báo hoàn thành.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tech Stack - Hidden by default, show on hover -->
-                            <div class="mb-6">
-                                <button onclick="toggleTech('tech1')" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-2">
-                                    <i class="fa-solid fa-code"></i> Xem công nghệ sử dụng
-                                    <i class="fa-solid fa-chevron-down text-xs transform transition-transform" id="icon-tech1"></i>
-                                </button>
-                                <div id="tech1" class="hidden mt-3 flex flex-wrap gap-2">
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
-                                        <i class="fa-solid fa-bolt"></i> n8n Workflow
-                                    </span>
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
-                                        <i class="fa-brands fa-wordpress"></i> WordPress API
-                                    </span>
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
-                                        <i class="fa-solid fa-brain"></i> OpenAI GPT-4
-                                    </span>
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
-                                        <i class="fa-solid fa-image"></i> DALL-E 3
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Apply suggestion -->
-                            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-sm">
-                                <strong class="text-amber-900 block mb-2">💡 Áp dụng tương tự:</strong>
-                                <span class="text-amber-800">E-commerce (mô tả sản phẩm), Công ty luật (bài viết pháp lý), Bất động sản (review dự án), Giáo dục (tài liệu học tập)</span>
-                            </div>
-
-                            <!-- Metrics -->
-                            <div class="flex flex-wrap gap-2 mt-6 pt-6 border-t border-gray-200">
-                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded hover:border-indigo-600 hover:shadow transition-all">
-                                    🚀 <span class="counter" data-target="12">12</span> bài/tháng
-                                </span>
-                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded hover:border-indigo-600 hover:shadow transition-all">
-                                    ⏱️ Chỉ cần 15p duyệt
-                                </span>
-                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded hover:border-indigo-600 hover:shadow transition-all">
-                                    ⚡ 100% Tự động
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2: F&B -->
-                <div class="bg-white border-3 border-green-500 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all">
-                    <button onclick="toggleAccordion('project2')" class="w-full p-6 text-left flex justify-between items-center bg-gradient-to-r from-green-50 to-white hover:from-green-100 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <i class="fa-solid fa-utensils text-4xl text-green-600"></i>
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <h3 class="text-lg font-bold text-green-900">✨ Chuỗi Nhà Hàng F&B</h3>
-                                    <span class="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs px-3 py-1 rounded-full font-bold">⭐ FEATURED</span>
-                                </div>
-                                <p class="text-sm text-gray-600">Trợ lý ảo 24/7 tra cứu dữ liệu qua Telegram/Zalo</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-2xl text-green-600 transform transition-transform duration-300" id="icon-project2"></i>
-                    </button>
-                    
-                    <div id="project2" class="accordion-content">
-                        <div class="p-6 bg-gray-50 border-t border-gray-200">
-                            <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                <div>
-                                    <span class="text-xs font-bold text-red-700 uppercase tracking-wide block mb-2">⚠️ Trước đây</span>
-                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-900">
-                                        Quản lý phải <strong>mở laptop tra giá vốn, chi phí</strong> mỗi khi cần ra quyết định. Mất thời gian, không kịp thời trong cuộc họp hoặc khi di chuyển.
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wide block mb-2">✅ Giải pháp AI</span>
-                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-sm text-green-900">
-                                        <strong>Trợ lý ảo 24/7:</strong> Chat với Bot qua Telegram/Zalo → Bot kết nối Google Sheets + Database → Trả lời ngay + Alert giá bất thường → Báo cáo realtime.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-6">
-                                <button onclick="toggleTech('tech2')" class="text-sm font-semibold text-green-600 hover:text-green-800 flex items-center gap-2">
-                                    <i class="fa-solid fa-code"></i> Xem công nghệ sử dụng
-                                    <i class="fa-solid fa-chevron-down text-xs transform transition-transform" id="icon-tech2"></i>
-                                </button>
-                                <div id="tech2" class="hidden mt-3 flex flex-wrap gap-2">
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
-                                        <i class="fa-brands fa-telegram"></i> Telegram Bot
-                                    </span>
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
-                                        <i class="fa-solid fa-table"></i> Google Sheets
-                                    </span>
-                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
-                                        <i class="fa-solid fa-database"></i> PostgreSQL
-                                    </span>
+                  </span>
                                     <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
                                         <i class="fa-solid fa-brain"></i> AI Assistant
                                     </span>
@@ -460,4 +167,481 @@
     </script>
 
 </body>
-</html>
+</html><!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tự Động Hóa - Thoát Khỏi Vòng Lặp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Background Grid */
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Gradient Mesh Background */
+        .gradient-mesh {
+            background: 
+                radial-gradient(at 20% 30%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 80% 70%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
+        }
+
+        /* Hero Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slide-left {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slide-right {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Flow Line Animation */
+        @keyframes flow-down {
+            0% { 
+                stroke-dashoffset: 1000;
+                opacity: 0;
+            }
+            20% { opacity: 1; }
+            100% { 
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        .flow-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .flow-line.active {
+            animation: flow-down 2s ease-out forwards;
+        }
+
+        /* Particle Effect */
+        @keyframes particle-rise {
+            0% { 
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+
+        .particle {
+            animation: particle-rise 3s ease-out infinite;
+        }
+
+        /* Data Flow Animation */
+        @keyframes data-flow {
+            0% {
+                transform: translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateX(300px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .data-particle {
+            animation: data-flow 2s ease-in-out infinite;
+        }
+
+        /* Card Flip */
+        .flip-card {
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Progress Bar Animation */
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: var(--progress); }
+        }
+
+        .progress-bar {
+            animation: progress 2s ease-out forwards;
+        }
+
+        /* Glowing Effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            animation: pulse-slow 2s ease-in-out infinite;
+        }
+
+        /* Custom Cursor Trail */
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.3);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fade-in 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slide-up 0.4s ease;
+        }
+
+        /* Counter Animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Smooth Scroll Indicator */
+        .scroll-indicator {
+            animation: float 2s ease-in-out infinite;
+        }
+
+        /* Timeline Connector */
+        .timeline-dot {
+            position: relative;
+        }
+
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, #6366f1 0%, transparent 100%);
+            left: 50%;
+            top: 100%;
+            transform: translateX(-50%);
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <!-- HERO SECTION - Visual Storytelling -->
+    <section class="min-h-screen flex items-center justify-center bg-grid gradient-mesh relative overflow-hidden">
+        <!-- Floating Elements Background -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-20 left-10 w-32 h-32 bg-indigo-200 rounded-full opacity-20 animate-float" style="animation-delay: 0s;"></div>
+            <div class="absolute top-40 right-20 w-24 h-24 bg-green-200 rounded-full opacity-20 animate-float" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-amber-200 rounded-full opacity-20 animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-40 right-1/3 w-28 h-28 bg-red-200 rounded-full opacity-20 animate-float" style="animation-delay: 1.5s;"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+            <!-- Main Visual -->
+            <div class="mb-12 reveal">
+                <div class="relative inline-block">
+                    <!-- Character Illustration -->
+                    <div class="text-9xl mb-6 animate-pulse-slow">
+                        😰
+                    </div>
+                    
+                    <!-- Flying tasks around character -->
+                    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                        <div class="absolute top-0 left-0 text-4xl opacity-60 animate-float" style="animation-delay: 0s;">📧</div>
+                        <div class="absolute top-0 right-0 text-4xl opacity-60 animate-float" style="animation-delay: 0.5s;">📊</div>
+                        <div class="absolute bottom-0 left-0 text-4xl opacity-60 animate-float" style="animation-delay: 1s;">💬</div>
+                        <div class="absolute bottom-0 right-0 text-4xl opacity-60 animate-float" style="animation-delay: 1.5s;">📋</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="hero-title text-5xl md:text-7xl font-black mb-6 leading-tight reveal" style="animation-delay: 0.2s;">
+                <span class="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">15 giờ/tuần</span><br>
+                <span class="text-gray-900">đang bị lãng phí</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto reveal" style="animation-delay: 0.4s;">
+                Công việc lặp đi lặp lại là <strong class="text-gray-900">kẻ trộm thời gian</strong> lớn nhất
+            </p>
+
+            <!-- CTA Button -->
+            <a href="#solution" class="inline-flex items-center gap-3 bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-xl hover:shadow-2xl hover:bg-indigo-700 hover:scale-105 transition-all reveal" style="animation-delay: 0.6s;">
+                <span>Khám phá giải pháp</span>
+                <i class="fa-solid fa-arrow-down scroll-indicator"></i>
+            </a>
+
+            <!-- Stats Counter -->
+            <div class="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto reveal" style="animation-delay: 0.8s;">
+                <div class="text-center">
+                    <div class="text-4xl font-black text-indigo-600 mb-2">
+                        <span class="counter" data-target="15">0</span>h
+                    </div>
+                    <div class="text-sm text-gray-600">Tiết kiệm/tuần</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-black text-green-600 mb-2">
+                        <span class="counter" data-target="80">0</span>%
+                    </div>
+                    <div class="text-sm text-gray-600">Giảm thời gian</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-black text-amber-600 mb-2">
+                        24/7
+                    </div>
+                    <div class="text-sm text-gray-600">Tự động hóa</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION - Split Screen Comparison -->
+    <section id="problem" class="py-24 bg-gradient-to-b from-white to-gray-50 relative">
+        <!-- Connection Line from Hero -->
+        <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full" width="2" height="100">
+            <line x1="1" y1="0" x2="1" y2="100" stroke="#cbd5e1" stroke-width="2" class="flow-line"/>
+        </svg>
+
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title text-4xl md:text-5xl font-black text-center mb-16 reveal">
+                Một ngày của bạn
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8 relative">
+                <!-- VS Divider -->
+                <div class="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full items-center justify-center text-2xl font-black text-gray-400 shadow-xl z-10">
+                    VS
+                </div>
+
+                <!-- BEFORE - Manual Work (Left) -->
+                <div class="reveal bg-gradient-to-br from-red-50 to-red-100 rounded-3xl p-8 border-4 border-red-200 relative overflow-hidden" style="animation-delay: 0.2s;">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 to-red-600"></div>
+                    
+                    <div class="text-center mb-8">
+                        <div class="text-7xl mb-4 animate-pulse-slow">😰</div>
+                        <h3 class="text-2xl font-bold text-red-900 mb-2">Cách Cũ</h3>
+                        <p class="text-red-700 text-sm">Thủ công - Lặp đi lặp lại</p>
+                    </div>
+
+                    <!-- Task List -->
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="text-2xl">📧</div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-red-200 rounded-full">
+                                        <div class="h-2 bg-red-500 rounded-full progress-bar" style="--progress: 100%"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-red-600">2h</span>
+                            </div>
+                            <p class="text-xs text-gray-600">Check & reply emails</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="text-2xl">📊</div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-red-200 rounded-full">
+                                        <div class="h-2 bg-red-500 rounded-full progress-bar" style="--progress: 100%; animation-delay: 0.5s;"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-red-600">1.5h</span>
+                            </div>
+                            <p class="text-xs text-gray-600">Update spreadsheets</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="text-2xl">💬</div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-red-200 rounded-full">
+                                        <div class="h-2 bg-red-500 rounded-full progress-bar" style="--progress: 100%; animation-delay: 1s;"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-red-600">1h</span>
+                            </div>
+                            <p class="text-xs text-gray-600">Reply messages</p>
+                        </div>
+                    </div>
+
+                    <!-- Total Time -->
+                    <div class="mt-6 text-center p-4 bg-red-200 rounded-xl">
+                        <div class="text-3xl font-black text-red-900">3+ giờ/ngày</div>
+                        <p class="text-sm text-red-700">Công việc lặp lại</p>
+                    </div>
+                </div>
+
+                <!-- AFTER - Automated (Right) -->
+                <div class="reveal bg-gradient-to-br from-green-50 to-green-100 rounded-3xl p-8 border-4 border-green-200 relative overflow-hidden" style="animation-delay: 0.4s;">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-green-600"></div>
+                    
+                    <div class="text-center mb-8">
+                        <div class="text-7xl mb-4">😎</div>
+                        <h3 class="text-2xl font-bold text-green-900 mb-2">Với AI</h3>
+                        <p class="text-green-700 text-sm">Tự động - Chính xác - 24/7</p>
+                    </div>
+
+                    <!-- Automated Tasks -->
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="text-2xl">✅</div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-green-200 rounded-full">
+                                        <div class="h-2 bg-green-500 rounded-full progress-bar" style="--progress: 20%"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-green-600">15p</span>
+                            </div>
+                            <p class="text-xs text-gray-600">Auto email processing</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="text-2xl">✅</div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-green-200 rounded-full">
+                                        <div class="h-2 bg-green-500 rounded-full progress-bar" style="--progress: 15%; animation-delay: 0.5s;"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-green-600">10p</span>
+                            </div>
+                            <p class="text-xs text-gray-600">Auto data sync</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="text-2xl">✅</div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-green-200 rounded-full">
+                                        <div class="h-2 bg-green-500 rounded-full progress-bar" style="--progress: 10%; animation-delay: 1s;"></div>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-bold text-green-600">5p</span>
+                            </div>
+                            <p class="text-xs text-gray-600">Auto responses</p>
+                        </div>
+                    </div>
+
+                    <!-- Total Time Saved -->
+                    <div class="mt-6 text-center p-4 bg-green-200 rounded-xl">
+                        <div class="text-3xl font-black text-green-900">30 phút/ngày</div>
+                        <p class="text-sm text-green-700">Chỉ cần duyệt kết quả</p>
+                    </div>
+
+                    <!-- Bonus Time -->
+                    <div class="mt-4 text-center p-3 bg-gradient-to-r from-amber-100 to-amber-200 rounded-xl border-2 border-amber-300">
+                        <p class="text-sm font-bold text-amber-900">
+                            🎉 Bạn có thêm <span class="text-xl">2.5 giờ</span> mỗi ngày!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION SECTION - Interactive Workflow -->
+    <section id="solution" class="py-24 bg-white relative
