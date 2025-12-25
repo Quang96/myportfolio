@@ -4,911 +4,395 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giải Pháp Tự Động Hóa & AI - Thoát Khỏi Vòng Lặp</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4338ca;
-            --accent-manual: #f59e0b;
-            --accent-success: #10b981;
-            --text-main: #1e293b;
-            --text-sub: #64748b;
-            --border-light: #e2e8f0;
-            --connector-color: #cbd5e1;
-            --radius-node: 16px;
-            --radius-btn: 50px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
         
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: var(--text-main);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        .bg-grid {
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 24px 24px;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-        }
-
-        h1, h2, h3 { color: var(--text-main); line-height: 1.2; letter-spacing: -0.02em; }
-        .text-center { text-align: center; }
-        .text-sub { color: var(--text-sub); font-size: 0.95rem; }
-        .highlight { color: var(--primary); font-weight: 700; }
-
-        /* === HERO SECTION === */
-        .hero { 
-            padding: 100px 0 80px;
-            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
-        }
-        
-        .hero-badge {
-            display: inline-block; 
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-            color: var(--primary-dark); 
-            padding: 8px 20px; 
-            border-radius: 30px; 
-            font-weight: 700; 
-            font-size: 0.85rem; 
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
-            animation: fadeInDown 0.8s ease;
-        }
-
-        .hero h1 { 
-            font-size: 2.8rem; 
-            font-weight: 900; 
-            margin-bottom: 1.5rem;
-            line-height: 1.15;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero h1 .thief {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-subtitle { 
-            max-width: 700px; 
-            margin: 0 auto 2rem; 
-            font-size: 1.15rem; 
-            color: var(--text-sub);
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .hero-examples {
-            display: inline-flex;
-            gap: 12px;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease 0.6s both;
-        }
-
-        .example-tag {
-            background: white;
-            border: 2px solid #fecaca;
-            color: #991b1b;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .hero-power {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-top: 2rem;
-            animation: fadeInUp 0.8s ease 0.8s both;
-        }
-
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* === WORKFLOW DIAGRAM === */
-        .workflow-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            margin: 50px 0;
-            flex-wrap: nowrap;
-        }
-
-        .node {
-            background: white;
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-node);
-            padding: 24px;
-            width: 300px;
-            position: relative;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 2;
-        }
-
-        .node:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
-        }
-
-        .node::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: 24px; right: 24px;
-            height: 4px;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-        .node.manual::before { background: var(--accent-manual); }
-        .node.process::before { background: var(--primary); }
-        .node.success::before { background: var(--accent-success); }
-
-        .node-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .node-icon-box {
-            width: 36px; height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .node.manual .node-icon-box { background: linear-gradient(135deg, #fbbf24, #d97706); }
-        .node.process .node-icon-box { background: linear-gradient(135deg, #818cf8, #4f46e5); }
-        .node.success .node-icon-box { background: linear-gradient(135deg, #34d399, #059669); }
-
-        .node-title { font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.03em; }
-        .node-desc { font-size: 0.9rem; color: var(--text-sub); line-height: 1.5; }
-
-        .connector {
-            flex: 0 0 60px;
-            height: 2px;
-            background: var(--connector-color);
-            position: relative;
-            z-index: 1;
-        }
-
-        .connector::after {
-            content: '';
-            position: absolute;
-            width: 8px; height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            top: -3px; left: 0;
-            box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
-            animation: flowHorizontal 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-
         @keyframes flowHorizontal {
             0% { left: 0; opacity: 0; }
             20% { opacity: 1; }
             80% { opacity: 1; }
             100% { left: 100%; opacity: 0; }
         }
-
-        /* === TIMELINE === */
-        .timeline-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 500px;
-            margin: 0 auto;
-        }
         
-        .timeline-connector {
-            width: 2px;
-            height: 50px;
-            background: var(--connector-color);
-            position: relative;
-        }
-
-        .timeline-connector::after {
-            content: '';
-            position: absolute;
-            width: 8px; height: 8px;
-            background: var(--accent-manual);
-            border-radius: 50%;
-            left: -3px; top: 0;
-            animation: flowVertical 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-
-        @keyframes flowVertical {
-            0% { top: 0; opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        /* === PROJECTS SECTION - CLEAN & SUBTLE === */
-        .projects-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        .animate-fade-in-down { animation: fadeInDown 0.8s ease; }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-            margin-top: 50px;
-        }
-
-        .project-card {
-            background: white;
-            border: 2px solid var(--border-light);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .project-card.visible {
-            animation: cardFadeIn 0.5s ease forwards;
-        }
-
-        @keyframes cardFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Subtle hover - chỉ shadow và border */
-        .project-card:hover { 
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            border-color: var(--primary);
-        }
-
-        /* Featured Cards - Static border, no animation */
-        .project-card.featured {
-            border-width: 3px;
-        }
-
-        .project-card.boxlok {
-            border-color: var(--primary);
-            background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
-        }
-
-        .project-card.boxlok:hover {
-            border-color: var(--primary-dark);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
-        }
-
-        .project-card.fnb {
-            border-color: var(--accent-success);
-            background: linear-gradient(180deg, #ffffff 0%, #fafff9 100%);
-        }
-
-        .project-card.fnb:hover {
-            border-color: #059669;
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
-        }
-
-        .project-header {
-            padding: 24px;
-            background: white;
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .project-logo {
-            width: 90px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
-            transition: filter 0.3s ease;
-        }
-
-        .project-card:hover .project-logo {
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
-        }
-
-        .project-title { 
-            font-weight: 800; 
-            font-size: 1.15rem; 
-            color: var(--primary-dark);
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-        }
-
-        .project-badge { 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            padding: 6px 14px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .project-badge.featured {
-            background: linear-gradient(135deg, var(--primary), #7c3aed);
-            color: white;
-        }
-
-        .project-badge:not(.featured) {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
-
-        .project-body { 
-            padding: 24px; 
-            flex: 1;
-        }
-
-        /* Before/After Comparison - Simplified */
-        .compare-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .compare-row::after {
-            content: '→';
+        
+        .connector::after {
+            content: '';
             position: absolute;
-            right: 0;
-            top: 0;
-            transform: translateX(calc(100% + 8px));
-            font-size: 1.5rem;
-            color: var(--primary);
-            font-weight: 900;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            width: 8px; height: 8px;
+            background: #6366f1;
+            border-radius: 50%;
+            top: -3px; left: 0;
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
+            animation: flowHorizontal 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
-        .project-card:hover .compare-row::after {
-            opacity: 1;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
         
-        .compare-col { 
-            flex: 1; 
-            font-size: 0.9rem;
+        .accordion-content.active {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in;
         }
 
-        .compare-label { 
-            display: block; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            margin-bottom: 8px;
-            letter-spacing: 0.05em;
-        }
-        
-        .problem-box { 
-            color: #b91c1c; 
-            background: #fef2f2;
-            padding: 14px; 
-            border-radius: 10px; 
-            border-left: 3px solid #ef4444;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover .problem-box {
-            background: #fee2e2;
-        }
-
-        .solution-box { 
-            color: #15803d; 
-            background: #f0fdf4;
-            padding: 14px; 
-            border-radius: 10px; 
-            border-left: 3px solid #10b981;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover .solution-box {
-            background: #dcfce7;
-        }
-
-        /* Tech Stack - Clean */
-        .tech-stack {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .tech-tag {
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            border: 1px solid var(--border-light);
-            background: #fafafa;
-            padding: 5px 10px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.2s ease;
-        }
-
-        .tech-tag:hover {
-            background: white;
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* Apply Suggestion Box - Subtle */
-        .apply-box {
-            margin-top: 16px;
-            padding: 14px;
-            background: #fffbeb;
-            border-left: 3px solid #f59e0b;
-            border-radius: 8px;
-            font-size: 0.85rem;
-        }
-
-        .apply-box strong {
-            color: #92400e;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .apply-box span {
-            color: #78350f;
-        }
-
-        /* Project Footer - Clean Metrics */
-        .project-footer {
-            padding: 18px 24px;
-            background: #fafafa;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .metric-pill {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            background: white;
-            border: 1px solid #e0e7ff;
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .metric-pill:hover {
-            border-color: var(--primary);
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
-        }
-
-        /* Counter - Simple */
-        .counter {
-            display: inline-block;
-            font-weight: 900;
-        }
-
-        /* === CTA SECTION - Clean === */
-        .cta-section {
-            margin-top: 80px;
-            margin-bottom: 80px;
-        }
-
-        .cta-box {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            padding: 60px 40px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-
-        .cta-box h2 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .cta-box p {
-            color: #cbd5e1;
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 16px 36px;
-            border-radius: var(--radius-btn);
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .btn-cta:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4); 
-            background: var(--primary-dark);
-        }
-
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .workflow-diagram { flex-direction: column; }
-            .node { width: 100%; max-width: 100%; }
-            
-            .connector { 
-                width: 2px; height: 40px; 
-                flex: 0 0 40px;
-            }
-            .connector::after {
-                top: 0; left: -3px;
-                animation: flowVertical 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            }
-
-            .projects-grid { grid-template-columns: 1fr; }
-            .compare-row { flex-direction: column; }
-            .compare-row::before { 
-                content: '↓';
-                top: 50%;
-                left: 50%;
-            }
+        .bg-grid {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
         }
     </style>
 </head>
-<body>
+<body class="bg-white text-gray-900 antialiased">
 
-    <div class="bg-grid"></div>
+    <!-- Background Grid -->
+    <div class="fixed inset-0 bg-grid opacity-60 -z-10"></div>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="container text-center">
-            <div class="hero-badge">
-                🚀 Giải pháp Tự động hóa Doanh nghiệp & Cá nhân
+    <!-- HERO SECTION - Optimized for Mobile -->
+    <section class="bg-gradient-to-b from-gray-50 to-white py-12 md:py-20">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <!-- Badge -->
+            <div class="inline-block bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-900 px-5 py-2 rounded-full text-sm font-bold mb-6 shadow-md animate-fade-in-down">
+                🚀 Giải pháp Tự động hóa Doanh nghiệp
             </div>
             
-            <h1>
-                <span class="thief">Kẻ trộm thời gian</span> lớn nhất không phải là mạng xã hội.<br>
-                Là những công việc 'nhỏ nhặt' lặp đi lặp lại mỗi ngày.
+            <!-- Headline - Shorter for mobile -->
+            <h1 class="text-3xl md:text-5xl font-black mb-4 md:mb-6 leading-tight">
+                <span class="gradient-text">Kẻ trộm thời gian</span> lớn nhất<br class="hidden md:block">
+                là công việc lặp đi lặp lại
             </h1>
             
-            <div class="hero-examples">
-                <span class="example-tag">📧 Email</span>
-                <span class="example-tag">📊 Excel</span>
-                <span class="example-tag">💬 Zalo</span>
+            <!-- Examples tags - Compact -->
+            <div class="flex flex-wrap gap-2 justify-center mb-4">
+                <span class="bg-white border-2 border-red-200 text-red-900 px-3 py-1.5 rounded-full text-sm font-semibold">📧 Email</span>
+                <span class="bg-white border-2 border-red-200 text-red-900 px-3 py-1.5 rounded-full text-sm font-semibold">📊 Excel</span>
+                <span class="bg-white border-2 border-red-200 text-red-900 px-3 py-1.5 rounded-full text-sm font-semibold">💬 Zalo</span>
             </div>
             
-            <p class="hero-subtitle">
-                Từng cái 5 phút — Nhưng cộng lại = <strong>15 giờ/tuần</strong> biến mất.<br>
-                Bạn <strong>bận rộn</strong>. Nhưng không <strong>tiến bộ</strong>.
+            <!-- Subtitle - Shorter -->
+            <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+                5 phút mỗi task × 180 lần/tháng = <strong>15 giờ/tuần</strong> biến mất.<br>
+                Bạn <strong>bận rộn</strong> nhưng không <strong>tiến bộ</strong>.
             </p>
             
-            <div class="hero-power">
+            <!-- CTA - Prominent -->
+            <div class="text-xl md:text-2xl font-extrabold text-indigo-600">
                 ⚡ Đã đến lúc thoát khỏi vòng lặp.
             </div>
         </div>
     </section>
 
-    <!-- WORKFLOW DIAGRAM -->
-    <section class="container" style="margin-top: 60px;">
-        <div class="workflow-diagram">
-            <div class="node manual">
-                <div class="node-header">
-                    <div class="node-icon-box"><i class="fa-regular fa-hand"></i></div>
-                    <div class="node-title">Cách Cũ (Thủ Công)</div>
+    <!-- WORKFLOW DIAGRAM - Responsive -->
+    <section class="max-w-6xl mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-0">
+            <!-- Manual -->
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 w-full md:w-80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all relative before:absolute before:top-0 before:left-6 before:right-6 before:h-1 before:bg-amber-500 before:rounded-b">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center text-white shadow">
+                        <i class="fa-regular fa-hand"></i>
+                    </div>
+                    <h3 class="font-bold text-sm uppercase tracking-wide">Cách Cũ</h3>
                 </div>
-                <div class="node-desc">
+                <p class="text-sm text-gray-600">
                     Check Zalo → Copy Excel → Email từng khách.<br>
                     <strong>Tốn: 3 giờ/ngày.</strong>
-                </div>
+                </p>
             </div>
 
-            <div class="connector"></div>
+            <!-- Connector -->
+            <div class="h-10 w-0.5 md:h-0.5 md:w-16 bg-gray-300 relative connector"></div>
 
-            <div class="node process">
-                <div class="node-header">
-                    <div class="node-icon-box"><i class="fa-solid fa-microchip"></i></div>
-                    <div class="node-title">Hệ Thống AI Agent</div>
+            <!-- AI Process -->
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 w-full md:w-80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all relative before:absolute before:top-0 before:left-6 before:right-6 before:h-1 before:bg-indigo-600 before:rounded-b">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-lg flex items-center justify-center text-white shadow">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="font-bold text-sm uppercase tracking-wide">AI Agent</h3>
                 </div>
-                <div class="node-desc">
-                    Tự động nhận diện dữ liệu, xử lý logic và thực thi nhiệm vụ 24/7.
-                </div>
+                <p class="text-sm text-gray-600">
+                    Tự động nhận diện, xử lý logic và thực thi 24/7.
+                </p>
             </div>
 
-            <div class="connector"></div>
+            <!-- Connector -->
+            <div class="h-10 w-0.5 md:h-0.5 md:w-16 bg-gray-300 relative connector"></div>
 
-            <div class="node success">
-                <div class="node-header">
-                    <div class="node-icon-box"><i class="fa-solid fa-chart-line"></i></div>
-                    <div class="node-title">Kết Quả Mới</div>
+            <!-- Success -->
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 w-full md:w-80 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all relative before:absolute before:top-0 before:left-6 before:right-6 before:h-1 before:bg-green-500 before:rounded-b">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center text-white shadow">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-bold text-sm uppercase tracking-wide">Kết Quả</h3>
                 </div>
-                <div class="node-desc">
+                <p class="text-sm text-gray-600">
                     Bạn chỉ cần duyệt. Máy làm hết.<br>
-                    <strong style="color: var(--accent-success);">Tiết kiệm 80% thời gian.</strong>
-                </div>
+                    <strong class="text-green-600">Tiết kiệm 80% thời gian.</strong>
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- TIMELINE -->
-    <section class="container" style="margin-top: 80px;">
-        <h2 class="text-center" style="margin-bottom: 40px;">Một ngày làm việc "điển hình" của bạn?</h2>
-        
-        <div class="timeline-container">
-            <div class="node manual" style="width: 100%; border-left: 4px solid var(--accent-manual); border-top: 1px solid var(--border-light);">
-                <div class="node-header">
-                    <span style="font-weight: 800; color: var(--text-sub); width: 60px;">08:00</span>
-                    <div class="node-title">Khởi động chậm chạp</div>
-                </div>
-                <div class="node-desc">Mở mắt thấy 50 email khách hỏi giá y hệt nhau. Bắt đầu copy paste.</div>
-            </div>
-            
-            <div class="timeline-connector"></div>
-            
-            <div class="node manual" style="width: 100%; border-left: 4px solid var(--accent-manual); border-top: 1px solid var(--border-light);">
-                <div class="node-header">
-                    <span style="font-weight: 800; color: var(--text-sub); width: 60px;">10:45</span>
-                    <div class="node-title">Quá tải thông tin</div>
-                </div>
-                <div class="node-desc">Vừa tra file Excel, vừa trả lời Zalo, vừa check đơn hàng. Dễ nhầm lẫn.</div>
+    <!-- PROJECTS SECTION - Accordion -->
+    <section class="bg-gradient-to-b from-white to-gray-50 py-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-black mb-4 bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
+                    Hệ thống thực tế đã triển khai
+                </h2>
+                <p class="text-gray-600">Không chỉ là lý thuyết, đây là những con số thật từ khách hàng thực tế.</p>
             </div>
 
-            <div class="timeline-connector"></div>
-
-            <div class="node manual" style="width: 100%; border-left: 4px solid #ef4444; border-top: 1px solid var(--border-light); background: #fff5f5;">
-                <div class="node-header">
-                    <span style="font-weight: 800; color: #ef4444; width: 60px;">18:00</span>
-                    <div class="node-title" style="color: #ef4444;">Kiệt sức & Chưa xong việc</div>
-                </div>
-                <div class="node-desc">Hết ngày nhưng chưa làm được việc chiến lược quan trọng nào.</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROJECTS SECTION -->
-    <section class="projects-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Hệ thống thực tế đã triển khai</h2>
-                <p class="text-sub">Không chỉ là lý thuyết, đây là những con số thật từ khách hàng thực tế.</p>
-            </div>
-
-            <div class="projects-grid">
+            <div class="space-y-4">
                 
-                <!-- BOXLOK - FEATURED -->
-                <div class="project-card featured boxlok" data-delay="0">
-                    <div class="project-header" style="background: linear-gradient(to right, #e0e7ff, #f8fafc);">
-                        <div>
-                            <img src="https://boxnlok.vn/web_images/logo.svg" alt="Boxlok" class="project-logo">
-                            <div class="project-title" style="color: var(--primary-dark);">
-                                ✨ Boxlok Logistics
+                <!-- Project 1: Boxlok - Accordion -->
+                <div class="bg-white border-3 border-indigo-600 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all">
+                    <button onclick="toggleAccordion('project1')" class="w-full p-6 text-left flex justify-between items-center bg-gradient-to-r from-indigo-50 to-white hover:from-indigo-100 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <img src="https://boxnlok.vn/web_images/logo.svg" alt="Boxlok" class="w-20 h-auto">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="text-lg font-bold text-indigo-900">✨ Boxlok Logistics</h3>
+                                    <span class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs px-3 py-1 rounded-full font-bold">⭐ FEATURED</span>
+                                </div>
+                                <p class="text-sm text-gray-600">AI viết blog SEO + tạo ảnh + đăng WordPress tự động</p>
                             </div>
                         </div>
-                        <span class="project-badge featured">⭐ FEATURED</span>
-                    </div>
-                    <div class="project-body">
-                        <div class="compare-row">
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #b91c1c;">⚠️ Trước đây</span>
-                                <div class="problem-box">
-                                    Founder mất <strong>3-4 giờ/tuần</strong> để viết bài blog SEO và tìm hình ảnh minh họa. Phải tự nghĩ ý tưởng, viết content, tìm ảnh phù hợp rồi đăng lên WordPress.
+                        <i class="fa-solid fa-chevron-down text-2xl text-indigo-600 transform transition-transform duration-300" id="icon-project1"></i>
+                    </button>
+                    
+                    <div id="project1" class="accordion-content">
+                        <div class="p-6 bg-gray-50 border-t border-gray-200">
+                            <!-- Before/After -->
+                            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <span class="text-xs font-bold text-red-700 uppercase tracking-wide block mb-2">⚠️ Trước đây</span>
+                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-900">
+                                        Founder mất <strong>3-4 giờ/tuần</strong> để viết bài blog SEO và tìm hình ảnh minh họa. Phải tự nghĩ ý tưởng, viết content, tìm ảnh rồi đăng lên WordPress.
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wide block mb-2">✅ Giải pháp AI</span>
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-sm text-green-900">
+                                        <strong>Workflow hoàn toàn tự động:</strong> Nhập keyword → AI viết bài chuẩn SEO + AI tạo ảnh minh họa → Tự động đăng lên WordPress → Thông báo hoàn thành.
+                                    </div>
                                 </div>
                             </div>
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #15803d;">✅ Giải pháp AI</span>
-                                <div class="solution-box">
-                                    <strong>Workflow hoàn toàn tự động:</strong> Nhập keyword → AI viết bài chuẩn SEO + AI tạo ảnh minh họa → Tự động đăng lên WordPress → Thông báo hoàn thành.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="tech-stack">
-                            <span class="tech-tag"><i class="fa-solid fa-bolt"></i> n8n Workflow</span>
-                            <span class="tech-tag"><i class="fa-brands fa-wordpress"></i> WordPress API</span>
-                            <span class="tech-tag"><i class="fa-solid fa-brain"></i> OpenAI GPT-4</span>
-                            <span class="tech-tag"><i class="fa-solid fa-image"></i> DALL-E 3</span>
-                        </div>
 
-                        <div class="apply-box">
-                            <strong>💡 Áp dụng tương tự:</strong> 
-                            <span>E-commerce (mô tả sản phẩm), Công ty luật (bài viết pháp lý), Bất động sản (review dự án), Giáo dục (tài liệu học tập)</span>
+                            <!-- Tech Stack - Hidden by default, show on hover -->
+                            <div class="mb-6">
+                                <button onclick="toggleTech('tech1')" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-code"></i> Xem công nghệ sử dụng
+                                    <i class="fa-solid fa-chevron-down text-xs transform transition-transform" id="icon-tech1"></i>
+                                </button>
+                                <div id="tech1" class="hidden mt-3 flex flex-wrap gap-2">
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-bolt"></i> n8n Workflow
+                                    </span>
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
+                                        <i class="fa-brands fa-wordpress"></i> WordPress API
+                                    </span>
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-brain"></i> OpenAI GPT-4
+                                    </span>
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-indigo-600 hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-image"></i> DALL-E 3
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Apply suggestion -->
+                            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-sm">
+                                <strong class="text-amber-900 block mb-2">💡 Áp dụng tương tự:</strong>
+                                <span class="text-amber-800">E-commerce (mô tả sản phẩm), Công ty luật (bài viết pháp lý), Bất động sản (review dự án), Giáo dục (tài liệu học tập)</span>
+                            </div>
+
+                            <!-- Metrics -->
+                            <div class="flex flex-wrap gap-2 mt-6 pt-6 border-t border-gray-200">
+                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded hover:border-indigo-600 hover:shadow transition-all">
+                                    🚀 <span class="counter" data-target="12">12</span> bài/tháng
+                                </span>
+                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded hover:border-indigo-600 hover:shadow transition-all">
+                                    ⏱️ Chỉ cần 15p duyệt
+                                </span>
+                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded hover:border-indigo-600 hover:shadow transition-all">
+                                    ⚡ 100% Tự động
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-footer">
-                        <span class="metric-pill">🚀 <span class="counter" data-target="12">0</span> bài/tháng</span>
-                        <span class="metric-pill">⏱️ Chỉ cần 15p duyệt</span>
-                        <span class="metric-pill">⚡ <span class="counter" data-target="100">0</span>% Tự động</span>
                     </div>
                 </div>
 
-                <!-- F&B - FEATURED -->
-                <div class="project-card featured fnb" data-delay="100">
-                    <div class="project-header" style="background: linear-gradient(to right, #d1fae5, #f8fafc);">
-                        <div class="project-title" style="color: #065f46;">
-                            <i class="fa-solid fa-utensils" style="color: #10b981; font-size: 1.5rem;"></i>
-                            ✨ Chuỗi Nhà Hàng F&B
-                        </div>
-                        <span class="project-badge featured">⭐ FEATURED</span>
-                    </div>
-                    <div class="project-body">
-                        <div class="compare-row">
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #b91c1c;">⚠️ Trước đây</span>
-                                <div class="problem-box">
-                                    Quản lý phải <strong>mở laptop tra giá vốn, chi phí</strong> mỗi khi cần ra quyết định. Mất thời gian, không kịp thời trong cuộc họp hoặc khi di chuyển.
+                <!-- Project 2: F&B -->
+                <div class="bg-white border-3 border-green-500 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all">
+                    <button onclick="toggleAccordion('project2')" class="w-full p-6 text-left flex justify-between items-center bg-gradient-to-r from-green-50 to-white hover:from-green-100 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-utensils text-4xl text-green-600"></i>
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="text-lg font-bold text-green-900">✨ Chuỗi Nhà Hàng F&B</h3>
+                                    <span class="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs px-3 py-1 rounded-full font-bold">⭐ FEATURED</span>
                                 </div>
-                            </div>
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #15803d;">✅ Giải pháp AI</span>
-                                <div class="solution-box">
-                                    <strong>Trợ lý ảo 24/7:</strong> Chat với Bot qua Telegram/Zalo → Bot kết nối Google Sheets + Database → Trả lời ngay + Alert giá bất thường → Báo cáo realtime.
-                                </div>
+                                <p class="text-sm text-gray-600">Trợ lý ảo 24/7 tra cứu dữ liệu qua Telegram/Zalo</p>
                             </div>
                         </div>
+                        <i class="fa-solid fa-chevron-down text-2xl text-green-600 transform transition-transform duration-300" id="icon-project2"></i>
+                    </button>
+                    
+                    <div id="project2" class="accordion-content">
+                        <div class="p-6 bg-gray-50 border-t border-gray-200">
+                            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <span class="text-xs font-bold text-red-700 uppercase tracking-wide block mb-2">⚠️ Trước đây</span>
+                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-900">
+                                        Quản lý phải <strong>mở laptop tra giá vốn, chi phí</strong> mỗi khi cần ra quyết định. Mất thời gian, không kịp thời trong cuộc họp hoặc khi di chuyển.
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wide block mb-2">✅ Giải pháp AI</span>
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-sm text-green-900">
+                                        <strong>Trợ lý ảo 24/7:</strong> Chat với Bot qua Telegram/Zalo → Bot kết nối Google Sheets + Database → Trả lời ngay + Alert giá bất thường → Báo cáo realtime.
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="tech-stack">
-                            <span class="tech-tag"><i class="fa-brands fa-telegram"></i> Telegram Bot</span>
-                            <span class="tech-tag"><i class="fa-solid fa-table"></i> Google Sheets</span>
-                            <span class="tech-tag"><i class="fa-solid fa-database"></i> PostgreSQL</span>
-                            <span class="tech-tag"><i class="fa-solid fa-brain"></i> AI Assistant</span>
-                        </div>
+                            <div class="mb-6">
+                                <button onclick="toggleTech('tech2')" class="text-sm font-semibold text-green-600 hover:text-green-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-code"></i> Xem công nghệ sử dụng
+                                    <i class="fa-solid fa-chevron-down text-xs transform transition-transform" id="icon-tech2"></i>
+                                </button>
+                                <div id="tech2" class="hidden mt-3 flex flex-wrap gap-2">
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
+                                        <i class="fa-brands fa-telegram"></i> Telegram Bot
+                                    </span>
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
+                                        <i class="fa-solid fa-table"></i> Google Sheets
+                                    </span>
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
+                                        <i class="fa-solid fa-database"></i> PostgreSQL
+                                    </span>
+                                    <span class="bg-gray-100 border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded flex items-center gap-2 hover:border-green-600 hover:text-green-600 transition-colors">
+                                        <i class="fa-solid fa-brain"></i> AI Assistant
+                                    </span>
+                                </div>
+                            </div>
 
-                        <div class="apply-box">
-                            <strong>💡 Áp dụng tương tự:</strong> 
-                            <span>Báo cáo tài chính (Kế toán), Tra cứu chính sách (HR), Phân tích dữ liệu khách hàng (Sales), Theo dõi tồn kho (Logistics)</span>
+                            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded text-sm">
+                                <strong class="text-amber-900 block mb-2">💡 Áp dụng tương tự:</strong>
+                                <span class="text-amber-800">Báo cáo tài chính (Kế toán), Tra cứu chính sách (HR), Phân tích dữ liệu khách hàng (Sales), Theo dõi tồn kho (Logistics)</span>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 mt-6 pt-6 border-t border-gray-200">
+                                <span class="bg-white border border-green-200 text-green-900 text-xs font-bold px-3 py-1.5 rounded hover:border-green-600 hover:shadow transition-all">
+                                    🔎 Chính xác >90%
+                                </span>
+                                <span class="bg-white border border-green-200 text-green-900 text-xs font-bold px-3 py-1.5 rounded hover:border-green-600 hover:shadow transition-all">
+                                    📱 Mọi lúc mọi nơi
+                                </span>
+                                <span class="bg-white border border-green-200 text-green-900 text-xs font-bold px-3 py-1.5 rounded hover:border-green-600 hover:shadow transition-all">
+                                    📉 Giảm 15h/tuần
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-footer">
-                        <span class="metric-pill">🔎 Chính xác ><span class="counter" data-target="90">0</span>%</span>
-                        <span class="metric-pill">📱 Mọi lúc mọi nơi</span>
-                        <span class="metric-pill">📉 Giảm <span class="counter" data-target="15">0</span>h/tuần</span>
-                        <span class="metric-pill">⚡ Alert tức thì</span>
                     </div>
                 </div>
 
-                <!-- HR Management -->
-                <div class="project-card" data-delay="200">
-                    <div class="project-header">
-                        <div class="project-title">
-                            <i class="fa-solid fa-building-user" style="color: var(--primary);"></i>
-                            Quản Lý Nhân Sự
-                        </div>
-                        <span class="project-badge" style="background: #e0e7ff; color: #4338ca;">Công ty Crypto</span>
-                    </div>
-                    <div class="project-body">
-                        <div class="compare-row">
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #b91c1c;">⚠️ Trước đây</span>
-                                <div class="problem-box">
-                                    Quản lý <strong>3 phòng ban</strong> với workflow & KPI riêng. File rời rạc, khó kiểm soát tiến độ và hiệu suất làm việc.
-                                </div>
-                            </div>
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #15803d;">✅ Giải pháp AI</span>
-                                <div class="solution-box">
-                                    Google Sheet + N8n automation → Sync workflow Content-Designer → KPI dashboard realtime → Báo cáo tự động hàng tuần.
-                                </div>
+                <!-- Project 3: HR Management -->
+                <div class="bg-white border-2 border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all">
+                    <button onclick="toggleAccordion('project3')" class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-building-user text-4xl text-indigo-600"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900">Quản Lý Nhân Sự</h3>
+                                <p class="text-sm text-gray-600">Sync workflow 3 phòng ban + KPI dashboard realtime</p>
                             </div>
                         </div>
-                        
-                        <div class="tech-stack">
-                            <span class="tech-tag"><i class="fa-solid fa-table"></i> Google Sheets</span>
-                            <span class="tech-tag"><i class="fa-solid fa-bolt"></i> N8n</span>
-                            <span class="tech-tag"><i class="fa-solid fa-chart-line"></i> Dashboard</span>
-                        </div>
+                        <i class="fa-solid fa-chevron-down text-2xl text-gray-400 transform transition-transform duration-300" id="icon-project3"></i>
+                    </button>
+                    
+                    <div id="project3" class="accordion-content">
+                        <div class="p-6 bg-gray-50 border-t border-gray-200">
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <span class="text-xs font-bold text-red-700 uppercase tracking-wide block mb-2">⚠️ Trước đây</span>
+                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-900">
+                                        Quản lý <strong>3 phòng ban</strong> với workflow & KPI riêng. File rời rạc, khó kiểm soát tiến độ và hiệu suất làm việc.
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wide block mb-2">✅ Giải pháp AI</span>
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-sm text-green-900">
+                                        Google Sheet + N8n automation → Sync workflow Content-Designer → KPI dashboard realtime → Báo cáo tự động hàng tuần.
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="apply-box">
-                            <strong>💡 Áp dụng tương tự:</strong> 
-                            <span>Quản lý dự án (Agency), Theo dõi công việc nhóm (Startup), Performance tracking (Sales team)</span>
+                            <div class="flex flex-wrap gap-2 mt-6 pt-6 border-t border-gray-200">
+                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded">⚡ ↓80% thời gian</span>
+                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded">📊 3 phòng ban</span>
+                                <span class="bg-white border border-indigo-200 text-indigo-900 text-xs font-bold px-3 py-1.5 rounded">💰 Tiết kiệm 1 HR</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-footer">
-                        <span class="metric-pill">⚡ ↓<span class="counter" data-target="80">0</span>% thời gian</span>
-                        <span class="metric-pill">📊 3 phòng ban</span>
-                        <span class="metric-pill">🔔 <span class="counter" data-target="15">0</span>h/tháng</span>
-                        <span class="metric-pill">💰 Tiết kiệm 1 HR</span>
                     </div>
                 </div>
 
-                <!-- Twitter Content -->
-                <div class="project-card" data-delay="300">
-                    <div class="project-header">
-                        <div class="project-title">
-                            <i class="fa-brands fa-twitter" style="color: var(--primary);"></i>
-                            Content Twitter Tự Động
-                        </div>
-                        <span class="project-badge" style="background: #e0e7ff; color: #4338ca;">Tài khoản Crypto</span>
-                    </div>
-                    <div class="project-body">
-                        <div class="compare-row">
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #b91c1c;">⚠️ Trước đây</span>
-                                <div class="problem-box">
-                                    Duy trì Twitter nhất quán về Crypto <strong>tốn 2h/ngày</strong>. Phải tự nghĩ nội dung, tìm trending, đăng đúng giờ vàng.
-                                </div>
-                            </div>
-                            <div class="compare-col">
-                                <span class="compare-label" style="color: #15803d;">✅ Giải pháp AI</span>
-                                <div class="solution-box">
-                                    AI scan trending Crypto → Generate content + hashtag → Schedule golden time → Track engagement → Tối ưu nội dung.
-                                </div>
+                <!-- Project 4: Twitter Content -->
+                <div class="bg-white border-2 border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all">
+                    <button onclick="toggleAccordion('project4')" class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <i class="fa-brands fa-twitter text-4xl text-blue-400"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900">Content Twitter Tự Động</h3>
+                                <p class="text-sm text-gray-600">AI scan trending + generate + schedule + track engagement</p>
                             </div>
                         </div>
+                        <i class="fa-solid fa-chevron-down text-2xl text-gray-400 transform transition-transform duration-300" id="icon-project4"></i>
+                    </button>
+                    
+                    <div id="project4" class="accordion-content">
+                        <div class="p-6 bg-gray-50 border-t border-gray-200">
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <span class="text-xs font-bold text-red-700 uppercase tracking-wide block mb-2">⚠️ Trước đây</span>
+                                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-900">
+                                        Duy trì Twitter nhất quán về Crypto <strong>tốn 2h/ngày</strong>. Phải tự nghĩ nội dung, tìm trending, đăng đúng giờ vàng.
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wide block mb-2">✅ Giải pháp AI</span>
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded text-sm text-green-900">
+                                        AI scan trending Crypto → Generate content + hashtag → Schedule golden time → Track engagement → Tối ưu nội dung.
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="tech-stack">
-                            <span class="tech-tag"><i class="fa-brands fa-twitter"></i> Twitter API</span>
-                            <span class="tech-tag"><i class="fa-solid fa-brain"></i> AI Content</span>
-                            <span class="tech-tag"><i class="fa-solid fa-clock"></i> Scheduler</span>
-                            <span class="tech-tag"><i class="fa-solid fa-chart-line"></i> Analytics</span>
+                            <div class="flex flex-wrap gap-2 mt-6 pt-6 border-t border-gray-200">
+                                <span class="bg-white border border-blue-200 text-blue-900 text-xs font-bold px-3 py-1.5 rounded">🚀 Scale 2-3x</span>
+                                <span class="bg-white border border-blue-200 text-blue-900 text-xs font-bold px-3 py-1.5 rounded">📈 ↑40% engagement</span>
+                                <span class="bg-white border border-blue-200 text-blue-900 text-xs font-bold px-3 py-1.5 rounded">📝 4-5 bài/ngày</span>
+                            </div>
                         </div>
-
-                        <div class="apply-box">
-                            <strong>💡 Áp dụng tương tự:</strong> 
-                            <span>Facebook Fanpage, LinkedIn posts, Instagram captions, TikTok script</span>
-                        </div>
-                    </div>
-                    <div class="project-footer">
-                        <span class="metric-pill">🚀 Scale 2-3x</span>
-                        <span class="metric-pill">📈 ↑<span class="counter" data-target="40">0</span>% engagement</span>
-                        <span class="metric-pill">⏱️ 6-8h/tuần</span>
-                        <span class="metric-pill">📝 4-5 bài/ngày</span>
                     </div>
                 </div>
 
@@ -917,24 +401,42 @@
     </section>
 
     <!-- CTA SECTION -->
-    <section class="container cta-section">
-        <div class="cta-box">
-            <h2>Bạn có chắc quy trình của mình đã tối ưu?</h2>
-            <p>
+    <section class="max-w-6xl mx-auto px-6 py-16">
+        <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 md:p-12 rounded-2xl text-center shadow-2xl">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Bạn có chắc quy trình của mình đã tối ưu?</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-8 text-sm md:text-base">
                 "Tôi không thể biết việc của bạn có tự động hóa được không - cho đến khi bạn kể cho tôi nghe về cách bạn làm việc hàng ngày."
             </p>
             
-            <a href="https://zalo.me/0909063196" class="btn-cta">
-                <i class="fa-regular fa-comment-dots"></i> 
+            <a href="https://zalo.me/0909063196" class="inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                <i class="fa-regular fa-comment-dots text-xl"></i>
                 CHIA SẺ VỀ CÔNG VIỆC CỦA BẠN
             </a>
             
-            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.6;">Zalo: 0909 063 196</p>
+            <p class="text-gray-400 text-sm mt-6">Zalo: 0909 063 196</p>
         </div>
     </section>
 
     <script>
-        // Intersection Observer for scroll animations
+        // Accordion toggle
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Tech stack toggle
+        function toggleTech(id) {
+            const tech = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            tech.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Smooth scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -943,51 +445,17 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const delay = entry.target.dataset.delay || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                        
-                        // Trigger counter animation
-                        const counters = entry.target.querySelectorAll('.counter');
-                        counters.forEach(counter => {
-                            animateCounter(counter);
-                        });
-                    }, delay);
-                    observer.unobserve(entry.target);
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, observerOptions);
 
-        // Observe all project cards
-        document.querySelectorAll('.project-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Counter animation function
-        function animateCounter(element) {
-            const target = parseInt(element.dataset.target);
-            const duration = 1500; // 1.5 seconds
-            const step = target / (duration / 16); // 60fps
-            let current = 0;
-
-            const timer = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 16);
-        }
-
-        // Add smooth parallax effect on scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.bg-grid');
-            parallaxElements.forEach(el => {
-                el.style.transform = `translateY(${scrolled * 0.5}px)`;
-            });
+        document.querySelectorAll('.bg-white').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
         });
     </script>
 
