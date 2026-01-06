@@ -1,472 +1,362 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Automation Agency - Nâng cấp Animation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        /* CSS cho N8N Animation */
-        @keyframes spin-node {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .spinner {
-            transition: opacity 0.3s;
-        }
-        .spinner.active {
-            opacity: 1 !important;
-            animation: spin-node 1s linear infinite;
-        }
-        .node-box.active {
-            border-color: #6366f1; /* Indigo */
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-        }
-        .node-icon.active {
-            color: #6366f1;
-            transform: scale(1.1);
-            transition: transform 0.3s;
-        }
+import React, { useState } from 'react';
+import { MapPin, Phone, MessageCircle, Shield, Clock, Star, ChevronDown, X } from 'lucide-react';
 
-        /* CSS cho Comparison Section (Perspective) */
-        .perspective-1000 {
-            perspective: 1000px;
-        }
-        #card-old {
-            backface-visibility: hidden;
-            transform-style: preserve-3d;
-        }
-        
-        /* CSS cho Modal */
-        .modal {
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        .modal-content {
-            transform: translateY(20px);
-            transition: transform 0.3s ease-out;
-        }
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-    </style>
-</head>
-<body class="bg-white text-slate-800">
+export default function BoxLokLanding() {
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
 
-    <header class="h-[50vh] bg-indigo-700 text-white flex items-center justify-center">
-        <h1 class="text-5xl font-extrabold">AI Automation Agency</h1>
-    </header>
-
-    <section class="py-16 bg-slate-50 overflow-hidden">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-black mb-12 text-slate-800">Quy trình Tự động hóa</h2>
-            
-            <div class="relative flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0" id="workflow-container">
-                
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-200 -z-10 transform -translate-y-1/2"></div>
-                
-                <div class="hidden md:block absolute top-1/2 left-0 h-1 bg-indigo-500 -z-0 transform -translate-y-1/2 transition-all duration-1000 ease-linear" id="flow-line" style="width: 0%"></div>
-
-                <div class="workflow-node relative group w-24 h-24" data-step="1">
-                    <div class="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-slate-200 flex items-center justify-center z-10 transition-all duration-300 node-box">
-                        <i class="fa-solid fa-bolt text-3xl text-slate-400 node-icon"></i>
-                    </div>
-                    <div class="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-indigo-500 border-r-indigo-500 opacity-0 spinner" style="transition: opacity 0.3s;"></div>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-slate-500 whitespace-nowrap">Input / Trigger</div>
-                </div>
-
-                <i class="fa-solid fa-arrow-down md:hidden text-slate-300"></i>
-
-                <div class="workflow-node relative group w-24 h-24" data-step="2">
-                    <div class="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-slate-200 flex items-center justify-center z-10 transition-all duration-300 node-box">
-                        <i class="fa-solid fa-brain text-3xl text-slate-400 node-icon"></i>
-                    </div>
-                    <div class="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-purple-500 border-r-purple-500 opacity-0 spinner"></div>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-slate-500 whitespace-nowrap">AI Processing</div>
-                </div>
-
-                <i class="fa-solid fa-arrow-down md:hidden text-slate-300"></i>
-
-                <div class="workflow-node relative group w-24 h-24" data-step="3">
-                    <div class="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-slate-200 flex items-center justify-center z-10 transition-all duration-300 node-box">
-                        <i class="fa-solid fa-paper-plane text-3xl text-slate-400 node-icon"></i>
-                    </div>
-                    <div class="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-green-500 border-r-green-500 opacity-0 spinner"></div>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-slate-500 whitespace-nowrap">Output / Action</div>
-                </div>
-
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">B</span>
             </div>
+            <span className="text-2xl font-bold">BoxLok</span>
+          </div>
+          <nav className="hidden md:flex gap-8 text-gray-600">
+            <a href="#how-it-works" className="hover:text-blue-600">How It Works</a>
+            <a href="#locations" className="hover:text-blue-600">Locations</a>
+            <a href="#reviews" className="hover:text-blue-600">Reviews</a>
+            <a href="#faq" className="hover:text-blue-600">FAQ</a>
+          </nav>
+          <button 
+            onClick={() => setShowBookingForm(true)}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Book Now
+          </button>
         </div>
-    </section>
+      </header>
 
-    <section id="comparison" class="py-20 bg-white">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-4xl font-black text-center mb-12">Sự khác biệt</h2>
-
-            <div class="relative w-full max-w-3xl mx-auto h-[400px] perspective-1000 group" id="compare-card">
-                
-                <div class="absolute inset-0 bg-white border-2 border-red-100 rounded-3xl shadow-xl p-8 transition-all duration-700 ease-in-out transform origin-left z-20 overflow-hidden" id="card-old">
-                    <div class="absolute top-0 left-0 w-2 h-full bg-red-500"></div>
-                    
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-2xl font-bold text-red-600">Cách làm cũ</h3>
-                        <span class="text-4xl animate-pulse">😰</span>
-                    </div>
-
-                    <div class="space-y-6 opacity-100 transition-opacity duration-500" id="content-old">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500"><i class="fa-regular fa-envelope"></i></div>
-                            <div class="flex-1">
-                                <div class="h-4 bg-red-50 rounded w-3/4 mb-2"></div>
-                                <p class="text-sm text-slate-500">Check mail thủ công (2h)</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500"><i class="fa-solid fa-table"></i></div>
-                            <div class="flex-1">
-                                <div class="h-4 bg-red-50 rounded w-1/2 mb-2"></div>
-                                <p class="text-sm text-slate-500">Copy paste Excel (3h)</p>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-4 border-t border-red-100 text-center text-red-400 font-medium">
-                            Tổng thiệt hại: <span class="font-bold text-red-600">15 giờ/tuần</span>
-                        </div>
-                    </div>
-                    
-                    <div class="absolute inset-0 bg-white/90 backdrop-blur-sm opacity-0 transition-opacity duration-500 flex items-center justify-center" id="overlay-old">
-                        <span class="text-slate-400 font-bold">Đang tự động hóa...</span>
-                    </div>
-                </div>
-
-                <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-white border-2 border-indigo-200 rounded-3xl shadow-2xl p-8 transition-all duration-700 ease-in-out transform scale-95 opacity-50 z-10" id="card-new">
-                    <div class="absolute top-0 left-0 w-2 h-full bg-indigo-500"></div>
-                    
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-2xl font-bold text-indigo-600">Với AI Agency</h3>
-                        <span class="text-4xl">😎</span>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600"><i class="fa-solid fa-robot"></i></div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-slate-800">Tự động 100%</span>
-                                    <i class="fa-solid fa-check-circle text-green-500"></i>
-                                </div>
-                                <p class="text-sm text-slate-500">AI tự trả lời & phân loại</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600"><i class="fa-solid fa-bolt"></i></div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-slate-800">Realtime Sync</span>
-                                    <i class="fa-solid fa-check-circle text-green-500"></i>
-                                </div>
-                                <p class="text-sm text-slate-500">Dữ liệu cập nhật tức thì</p>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-4 border-t border-indigo-100 text-center text-indigo-600 font-medium">
-                            Bạn rảnh tay: <span class="font-bold text-2xl text-indigo-700">Thêm 15 giờ/tuần</span>
-                        </div>
-                    </div>
-                </div>
-
+      {/* Hero Section */}
+      <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <div>
+            <div className="inline-block bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              Trusted by 1000+ Travelers
             </div>
-            
-            <div class="text-center mt-8">
-                <button onclick="toggleComparison()" class="bg-slate-800 text-white px-6 py-2 rounded-full hover:bg-slate-700 transition flex items-center gap-2 mx-auto">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Xem sự thay đổi
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              LUGGAGE STORAGE
+              <span className="block text-blue-600">with pick-up and delivery</span>
+              <span className="block">wherever you are</span>
+            </h1>
+            <p className="text-xl text-gray-600 mb-8">
+              Dịch vụ gửi hành lý chuyên nghiệp tại TP.HCM với thu gom và giao hàng tận nơi. An toàn, tiện lợi, giá cả minh bạch.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button 
+                onClick={() => setShowBookingForm(true)}
+                className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700"
+              >
+                Book Now
+              </button>
+              <a 
+                href="https://wa.me/yourwhatsappnumber" 
+                className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 flex items-center justify-center gap-2"
+              >
+                <MessageCircle size={24} />
+                WhatsApp Us
+              </a>
+            </div>
+            <div className="flex items-center gap-8 mt-8">
+              <div className="flex items-center gap-2">
+                <Shield className="text-green-600" size={24} />
+                <span className="text-sm font-medium">100% Secure</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="text-blue-600" size={24} />
+                <span className="text-sm font-medium">24/7 Support</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Image */}
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=1000&fit=crop" 
+                alt="Delivery person with luggage"
+                className="w-full h-auto"
+              />
+            </div>
+            {/* Floating Rating Card */}
+            <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="fill-yellow-400 text-yellow-400" size={20} />
+                ))}
+              </div>
+              <p className="text-sm font-semibold">1000+ Happy Travelers</p>
+              <p className="text-xs text-gray-500">Trusted in Ho Chi Minh City</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section id="how-it-works" className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-xl text-gray-600">Simple, fast, and stress-free. Get back to exploring immediately.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { step: '1', title: 'Book Online', desc: 'Đặt lịch qua website hoặc liên hệ qua WhatsApp', icon: '📱' },
+              { step: '2', title: 'We Pick Up', desc: 'Chúng tôi đến lấy, niêm phong và thu gom hành lý của bạn', icon: '🚗' },
+              { step: '3', title: 'We Store', desc: 'Chúng tôi bảo quản an toàn có giám sát 24/7', icon: '🔒' },
+              { step: '4', title: 'We Deliver', desc: 'Giao đến địa điểm bạn chỉ định đúng giờ', icon: '📦' }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                <div className="text-5xl mb-4">{item.icon}</div>
+                <div className="text-blue-600 font-bold text-sm mb-2">STEP {item.step}</div>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-gray-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Where You Can Use BoxLok */}
+      <section id="locations" className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Where You Can Use BoxLok</h2>
+            <p className="text-xl text-gray-600">Flexible pickup and delivery across Ho Chi Minh City</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { 
+                title: 'Hotels & Airbnb', 
+                desc: 'TP.HCM + các thành phố khác',
+                details: 'Lấy và giao hành lý tại khách sạn hoặc căn hộ của bạn',
+                icon: '🏨'
+              },
+              { 
+                title: 'Tan Son Nhat Airport', 
+                desc: 'Lấy/giao tại lề đường sân bay',
+                details: 'Dịch vụ nhanh chóng tại sân bay SGN',
+                icon: '✈️'
+              },
+              { 
+                title: 'Anywhere in HCMC', 
+                desc: 'Nhà hàng, quán café, điểm tham quan',
+                details: 'Linh hoạt với mọi địa điểm trong thành phố',
+                icon: '📍'
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-gradient-to-br from-blue-50 to-white border border-blue-100 rounded-xl p-8 hover:shadow-lg transition">
+                <div className="text-5xl mb-4">{item.icon}</div>
+                <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
+                <p className="text-blue-600 font-semibold mb-3">{item.desc}</p>
+                <p className="text-gray-600">{item.details}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section id="reviews" className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Join +1000 Luggage-free Travellers</h2>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="fill-yellow-400 text-yellow-400" size={32} />
+              ))}
+            </div>
+            <a href="#" className="text-blue-600 hover:underline text-lg">Read more reviews on Google →</a>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { name: 'Sarah Johnson', review: 'Amazing service! They picked up my luggage from the hotel and delivered it to the airport. So convenient!', rating: 5 },
+              { name: 'Michael Chen', review: 'Very professional and secure. I could enjoy my last day in HCMC without carrying heavy bags.', rating: 5 },
+              { name: 'Emma Wilson', review: 'Highly recommend! Great communication via WhatsApp and on-time delivery. Worth every penny.', rating: 5 }
+            ].map((review, idx) => (
+              <div key={idx} className="bg-white rounded-xl p-6 shadow-sm">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} className="fill-yellow-400 text-yellow-400" size={20} />
+                  ))}
+                </div>
+                <p className="text-gray-700 mb-4 italic">"{review.review}"</p>
+                <p className="font-semibold">{review.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-16 md:py-24">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          
+          <div className="space-y-4">
+            {[
+              { q: 'BoxLok giá bao nhiêu?', a: 'Giá phụ thuộc vào kích thước hành lý và thời gian lưu trữ. Liên hệ để nhận báo giá chính xác.' },
+              { q: 'BoxLok có an toàn không?', a: 'Có! Chúng tôi có hệ thống giám sát 24/7, bảo hiểm hành lý và niêm phong an toàn.' },
+              { q: 'Làm sao để gặp nhân viên BoxLok?', a: 'Sau khi đặt lịch, nhân viên sẽ liên hệ xác nhận và đến đúng giờ theo địa điểm bạn chỉ định.' },
+              { q: 'Liên hệ hỗ trợ khách hàng như thế nào?', a: 'Bạn có thể liên hệ qua WhatsApp, hotline (tiếng Việt) hoặc email 24/7.' }
+            ].map((faq, idx) => (
+              <div key={idx} className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50"
+                >
+                  <span className="font-semibold text-lg">{faq.q}</span>
+                  <ChevronDown className={`transform transition ${openFaq === idx ? 'rotate-180' : ''}`} />
                 </button>
-            </div>
+                {openFaq === idx && (
+                  <div className="px-6 pb-6 text-gray-600">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section class="py-20 bg-slate-100">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-black text-center mb-12">Dự án Thực tế</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <div onclick="openModal('boxlok')" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 cursor-pointer border-t-4 border-indigo-500">
-                    <div class="flex items-center mb-4">
-                        <i class="fa-solid fa-truck-fast text-4xl text-indigo-500 mr-4"></i>
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-800">Boxlok Logistics</h3>
-                            <p class="text-sm text-slate-500">Content & SEO Automation</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-600">Tự động hóa hoàn toàn quy trình sáng tạo nội dung SEO từ khóa đến khi đăng bài trên Wordpress.</p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-lg p-6 cursor-pointer border-t-4 border-green-500">
-                    <div class="flex items-center mb-4">
-                        <i class="fa-solid fa-user-tie text-4xl text-green-500 mr-4"></i>
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-800">HRTech Solutions</h3>
-                            <p class="text-sm text-slate-500">Hiring Automation</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-600">Hệ thống AI lọc CV, chấm điểm và tự động gửi mail phỏng vấn cho ứng viên tiềm năng.</p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-lg p-6 cursor-pointer border-t-4 border-orange-500">
-                    <div class="flex items-center mb-4">
-                        <i class="fa-solid fa-shop text-4xl text-orange-500 mr-4"></i>
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-800">Ecom Store X</h3>
-                            <p class="text-sm text-slate-500">Customer Support AI</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-600">Triển khai chatbot thông minh xử lý 90% câu hỏi lặp lại của khách hàng 24/7.</p>
-                </div>
-                
+      {/* Map Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12">Find Us Easily</h2>
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="bg-gray-300 rounded-xl h-96 flex items-center justify-center">
+              <MapPin size={64} className="text-gray-500" />
+              <span className="ml-4 text-gray-600 text-lg">Map will be integrated here</span>
             </div>
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <MapPin className="text-blue-600 flex-shrink-0" size={24} />
+                <div>
+                  <h3 className="font-bold text-lg mb-2">The Address</h3>
+                  <p className="text-gray-600">Central 2, Vinhomes Central Park (Grand Plaza), Ho Chi Minh International Airport (SGN), Ho Chi Minh, Vietnam</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Phone className="text-blue-600 flex-shrink-0" size={24} />
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Contact</h3>
+                  <p className="text-gray-600">Hotline: +84 xxx xxx xxx (Tiếng Việt)</p>
+                  <p className="text-gray-600">WhatsApp: +84 xxx xxx xxx (English)</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Clock className="text-blue-600 flex-shrink-0" size={24} />
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Opening Hours</h3>
+                  <p className="text-gray-600">Monday - Sunday: 24 hours</p>
+                  <p className="text-gray-600">Available for pickup and delivery anytime</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <div id="modal-boxlok" class="modal fixed inset-0 z-50 opacity-0 invisible flex items-center justify-center p-4" onclick="closeModal('boxlok')">
-        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"></div>
-
-        <div class="modal-content bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
-            
-            <div class="bg-indigo-600 p-6 flex justify-between items-center text-white sticky top-0 z-20">
-                <div class="flex items-center gap-4">
-                    <div class="bg-white p-2 rounded-lg">
-                        <i class="fa-solid fa-cube text-indigo-600 text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold">Boxlok Logistics</h3>
-                        <p class="text-indigo-200 text-sm">Hệ thống SEO & Content Automation</p>
-                    </div>
-                </div>
-                <button onclick="closeModal('boxlok')" class="text-white/70 hover:text-white text-3xl">&times;</button>
-            </div>
-
-            <div class="p-8 overflow-y-auto">
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div class="bg-red-50 rounded-2xl p-6 border border-red-100">
-                        <h4 class="flex items-center gap-2 text-red-700 font-bold mb-4">
-                            <i class="fa-solid fa-triangle-exclamation"></i> VẤN ĐỀ GẶP PHẢI
-                        </h4>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-red-400">•</span>
-                                <span>CEO mất <strong>4 giờ/tuần</strong> để viết bài thủ công.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-red-400">•</span>
-                                <span>Chi phí thuê Agency viết bài cao (5-7tr/tháng).</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-red-400">•</span>
-                                <span>Không đồng bộ hình ảnh, SEO kém hiệu quả.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
-                        <h4 class="flex items-center gap-2 text-emerald-700 font-bold mb-4">
-                            <i class="fa-solid fa-microchip"></i> GIẢI PHÁP AUTOMATION
-                        </h4>
-                        <ul class="space-y-3 text-slate-700">
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-emerald-500"><i class="fa-solid fa-check"></i></span>
-                                <span>Workflow <strong>n8n</strong> kết nối GPT-4 & Wordpress.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-emerald-500"><i class="fa-solid fa-check"></i></span>
-                                <span>AI tự nghiên cứu từ khóa & viết 2000 từ chuẩn SEO.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 text-emerald-500"><i class="fa-solid fa-check"></i></span>
-                                <span>DALL-E 3 tự vẽ hình minh họa theo nội dung.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <h4 class="text-slate-400 font-bold text-sm tracking-widest mb-4 uppercase">Hiệu quả thực tế</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-3xl font-black text-indigo-600 mb-1">12</div>
-                        <div class="text-xs text-slate-500">Bài viết / tháng</div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-3xl font-black text-green-600 mb-1">15p</div>
-                        <div class="text-xs text-slate-500">Thời gian duyệt</div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-3xl font-black text-blue-600 mb-1">Top 3</div>
-                        <div class="text-xs text-slate-500">Thứ hạng Google</div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                        <div class="text-3xl font-black text-orange-600 mb-1">0đ</div>
-                        <div class="text-xs text-slate-500">Chi phí nhân sự</div>
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">n8n</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">OpenAI API</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">WordPress</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">Telegram Bot</span>
-                    </div>
-                    <a href="https://zalo.me/0909063196" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">
-                        Triển khai giống vậy ngay
-                    </a>
-                </div>
-            </div>
+      {/* CTA Section */}
+      <section className="bg-blue-600 text-white py-16">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-4">Don't Let Heavy Luggage Slow You Down</h2>
+          <p className="text-xl mb-8 opacity-90">Experience Ho Chi Minh City hands-free with BoxLok</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button 
+              onClick={() => setShowBookingForm(true)}
+              className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100"
+            >
+              Contact Us
+            </button>
+            <a 
+              href="tel:+84xxxxxxxxx"
+              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 flex items-center justify-center gap-2"
+            >
+              <Phone size={24} />
+              Hotline (Tiếng Việt)
+            </a>
+          </div>
         </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">B</span>
+                </div>
+                <span className="text-2xl font-bold">BoxLok</span>
+              </div>
+              <p className="text-gray-400">Safe, affordable, and convenient luggage storage in Ho Chi Minh City.</p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">About Us</a></li>
+                <li><a href="#" className="hover:text-white">Our Team</a></li>
+                <li><a href="#" className="hover:text-white">Locations</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Support</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Help Center</a></li>
+                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>+84 xxx xxx xxx</li>
+                <li>info@boxlok.com</li>
+                <li>Ho Chi Minh City, Vietnam</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
+            <p>© 2024 BoxLok Luggage Storage. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Booking Form Modal */}
+      {showBookingForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-8 relative">
+            <button 
+              onClick={() => setShowBookingForm(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X size={24} />
+            </button>
+            <h3 className="text-2xl font-bold mb-6">Book Your Storage</h3>
+            <form className="space-y-4">
+              <input type="text" placeholder="Your Name" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+              <input type="email" placeholder="Email" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+              <input type="tel" placeholder="Phone Number" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+              <input type="text" placeholder="Pickup Location" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+              <input type="date" placeholder="Date" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
+              <textarea placeholder="Special Requests" className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24"></textarea>
+              <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
+                Submit Booking
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
-    
-    <footer class="p-10 bg-slate-800 text-white text-center">
-        &copy; 2025 AI Agency
-    </footer>
-
-    <script>
-        
-        // --- 1. N8N ANIMATION LOGIC ---
-        function runWorkflowAnimation() {
-            const nodes = document.querySelectorAll('.workflow-node');
-            const flowLine = document.getElementById('flow-line');
-            const totalSteps = nodes.length;
-            
-            // Reset state
-            flowLine.style.width = '0%';
-            nodes.forEach(node => {
-                node.querySelector('.node-box').classList.remove('active');
-                node.querySelector('.node-icon').classList.remove('active');
-                node.querySelector('.spinner').classList.remove('active');
-            });
-
-            let currentStep = 0;
-
-            function activateStep() {
-                if (currentStep >= totalSteps) {
-                    // Kết thúc loop, nghỉ 1.5s rồi chạy lại
-                    setTimeout(() => {
-                        nodes.forEach(node => {
-                            node.querySelector('.node-box').classList.remove('active');
-                            node.querySelector('.node-icon').classList.remove('active');
-                            node.querySelector('.spinner').classList.remove('active');
-                        });
-                        flowLine.style.width = '0%'; 
-                        setTimeout(runWorkflowAnimation, 500); // Bắt đầu lại sau khi reset
-                    }, 1500);
-                    return;
-                }
-
-                const node = nodes[currentStep];
-                const box = node.querySelector('.node-box');
-                const icon = node.querySelector('.node-icon');
-                const spinner = node.querySelector('.spinner');
-
-                // 1. Activate Node (Start Spinning)
-                box.classList.add('active');
-                icon.classList.add('active');
-                spinner.classList.add('active');
-
-                // 2. Move Line (nếu không phải node cuối)
-                if (currentStep < totalSteps - 1) {
-                    const progress = ((currentStep + 1) / (totalSteps - 1)) * 100;
-                    
-                    // Giả lập thời gian xử lý: 0.8s sau đó line chạy tiếp
-                    setTimeout(() => {
-                        flowLine.style.width = `${progress}%`;
-                        spinner.classList.remove('active'); // Dừng xoay khi xong
-                    }, 800);
-                } else {
-                    // Node cuối
-                     setTimeout(() => {
-                        spinner.classList.remove('active');
-                    }, 800);
-                }
-
-                currentStep++;
-                setTimeout(activateStep, 1000); // Chuyển sang bước tiếp theo sau 1s
-            }
-
-            activateStep();
-        }
-
-        // Trigger animation khi scroll tới section
-        const workflowSection = document.getElementById('workflow-container');
-        if(workflowSection) {
-            const workflowObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        runWorkflowAnimation();
-                        // Tắt observer sau lần chạy đầu để script tự quản lý việc lặp lại
-                        workflowObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 }); // Khi 50% section lọt vào màn hình
-            workflowObserver.observe(workflowSection);
-        }
-        
-        // --- 2. COMPARISON ANIMATION LOGIC ---
-        let isAutomated = false;
-        function toggleComparison() {
-            const cardOld = document.getElementById('card-old');
-            const cardNew = document.getElementById('card-new');
-            const overlayOld = document.getElementById('overlay-old');
-            const button = document.querySelector('#comparison button');
-
-            if (!isAutomated) {
-                // Action: Transform to New
-                overlayOld.classList.remove('opacity-0'); // Show overlay text
-                button.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Quay lại cách cũ';
-
-                setTimeout(() => {
-                    // Slide Old Card Away
-                    cardOld.style.transform = "translateX(120%) rotate(5deg)";
-                    cardOld.style.opacity = "0";
-                    
-                    // Bring New Card Front
-                    cardNew.style.transform = "scale(1)";
-                    cardNew.style.opacity = "1";
-                    cardNew.style.zIndex = "30";
-                }, 600); 
-                
-            } else {
-                // Action: Reset
-                cardOld.style.transform = "translateX(0) rotate(0)";
-                cardOld.style.opacity = "1";
-                overlayOld.classList.add('opacity-0');
-                button.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Xem sự thay đổi';
-
-                cardNew.style.transform = "scale(0.95)";
-                cardNew.style.opacity = "0.5";
-                cardNew.style.zIndex = "10";
-            }
-            isAutomated = !isAutomated;
-        }
-
-        // --- 3. MODAL LOGIC (Boxlok) ---
-        function openModal(id) {
-            const modal = document.getElementById(`modal-${id}`);
-            if (modal) {
-                modal.classList.add('active');
-                modal.classList.remove('invisible', 'opacity-0');
-            }
-        }
-
-        function closeModal(id) {
-            const modal = document.getElementById(`modal-${id}`);
-            if (modal) {
-                modal.classList.remove('active');
-                modal.classList.add('invisible', 'opacity-0');
-            }
-        }
-    </script>
-
-</body>
-</html>
+  );
+}
