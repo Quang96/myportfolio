@@ -1,362 +1,953 @@
-import React, { useState } from 'react';
-import { MapPin, Phone, MessageCircle, Shield, Clock, Star, ChevronDown, X } from 'lucide-react';
-
-export default function BoxLokLanding() {
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [openFaq, setOpenFaq] = useState(null);
-
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">B</span>
-            </div>
-            <span className="text-2xl font-bold">BoxLok</span>
-          </div>
-          <nav className="hidden md:flex gap-8 text-gray-600">
-            <a href="#how-it-works" className="hover:text-blue-600">How It Works</a>
-            <a href="#locations" className="hover:text-blue-600">Locations</a>
-            <a href="#reviews" className="hover:text-blue-600">Reviews</a>
-            <a href="#faq" className="hover:text-blue-600">FAQ</a>
-          </nav>
-          <button 
-            onClick={() => setShowBookingForm(true)}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Book Now
-          </button>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
-            <div className="inline-block bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              Trusted by 1000+ Travelers
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              LUGGAGE STORAGE
-              <span className="block text-blue-600">with pick-up and delivery</span>
-              <span className="block">wherever you are</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Dịch vụ gửi hành lý chuyên nghiệp tại TP.HCM với thu gom và giao hàng tận nơi. An toàn, tiện lợi, giá cả minh bạch.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button 
-                onClick={() => setShowBookingForm(true)}
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700"
-              >
-                Book Now
-              </button>
-              <a 
-                href="https://wa.me/yourwhatsappnumber" 
-                className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 flex items-center justify-center gap-2"
-              >
-                <MessageCircle size={24} />
-                WhatsApp Us
-              </a>
-            </div>
-            <div className="flex items-center gap-8 mt-8">
-              <div className="flex items-center gap-2">
-                <Shield className="text-green-600" size={24} />
-                <span className="text-sm font-medium">100% Secure</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="text-blue-600" size={24} />
-                <span className="text-sm font-medium">24/7 Support</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Image */}
-          <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=1000&fit=crop" 
-                alt="Delivery person with luggage"
-                className="w-full h-auto"
-              />
-            </div>
-            {/* Floating Rating Card */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="fill-yellow-400 text-yellow-400" size={20} />
-                ))}
-              </div>
-              <p className="text-sm font-semibold">1000+ Happy Travelers</p>
-              <p className="text-xs text-gray-500">Trusted in Ho Chi Minh City</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section id="how-it-works" className="bg-gray-50 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-gray-600">Simple, fast, and stress-free. Get back to exploring immediately.</p>
-          </div>
-          
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { step: '1', title: 'Book Online', desc: 'Đặt lịch qua website hoặc liên hệ qua WhatsApp', icon: '📱' },
-              { step: '2', title: 'We Pick Up', desc: 'Chúng tôi đến lấy, niêm phong và thu gom hành lý của bạn', icon: '🚗' },
-              { step: '3', title: 'We Store', desc: 'Chúng tôi bảo quản an toàn có giám sát 24/7', icon: '🔒' },
-              { step: '4', title: 'We Deliver', desc: 'Giao đến địa điểm bạn chỉ định đúng giờ', icon: '📦' }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
-                <div className="text-5xl mb-4">{item.icon}</div>
-                <div className="text-blue-600 font-bold text-sm mb-2">STEP {item.step}</div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Where You Can Use BoxLok */}
-      <section id="locations" className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Where You Can Use BoxLok</h2>
-            <p className="text-xl text-gray-600">Flexible pickup and delivery across Ho Chi Minh City</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { 
-                title: 'Hotels & Airbnb', 
-                desc: 'TP.HCM + các thành phố khác',
-                details: 'Lấy và giao hành lý tại khách sạn hoặc căn hộ của bạn',
-                icon: '🏨'
-              },
-              { 
-                title: 'Tan Son Nhat Airport', 
-                desc: 'Lấy/giao tại lề đường sân bay',
-                details: 'Dịch vụ nhanh chóng tại sân bay SGN',
-                icon: '✈️'
-              },
-              { 
-                title: 'Anywhere in HCMC', 
-                desc: 'Nhà hàng, quán café, điểm tham quan',
-                details: 'Linh hoạt với mọi địa điểm trong thành phố',
-                icon: '📍'
-              }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-blue-50 to-white border border-blue-100 rounded-xl p-8 hover:shadow-lg transition">
-                <div className="text-5xl mb-4">{item.icon}</div>
-                <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
-                <p className="text-blue-600 font-semibold mb-3">{item.desc}</p>
-                <p className="text-gray-600">{item.details}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Reviews Section */}
-      <section id="reviews" className="bg-gray-50 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Join +1000 Luggage-free Travellers</h2>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="fill-yellow-400 text-yellow-400" size={32} />
-              ))}
-            </div>
-            <a href="#" className="text-blue-600 hover:underline text-lg">Read more reviews on Google →</a>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: 'Sarah Johnson', review: 'Amazing service! They picked up my luggage from the hotel and delivered it to the airport. So convenient!', rating: 5 },
-              { name: 'Michael Chen', review: 'Very professional and secure. I could enjoy my last day in HCMC without carrying heavy bags.', rating: 5 },
-              { name: 'Emma Wilson', review: 'Highly recommend! Great communication via WhatsApp and on-time delivery. Worth every penny.', rating: 5 }
-            ].map((review, idx) => (
-              <div key={idx} className="bg-white rounded-xl p-6 shadow-sm">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="fill-yellow-400 text-yellow-400" size={20} />
-                  ))}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoxLok - Luggage Storage Service</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        header {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #2563eb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        nav {
+            display: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #2563eb;
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+        
+        .btn-secondary:hover {
+            background: #eff6ff;
+        }
+        
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+        }
+        
+        .hero-grid {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .text-blue {
+            color: #2563eb;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-features {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .hero-image {
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .rating-card {
+            position: absolute;
+            bottom: -1.5rem;
+            left: -1.5rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+        
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .star {
+            color: #fbbf24;
+            fill: #fbbf24;
+        }
+        
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .bg-gray {
+            background: #f9fafb;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        h2 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .section-description {
+            font-size: 1.25rem;
+            color: #6b7280;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step-label {
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+        
+        .card-description {
+            color: #6b7280;
+        }
+        
+        .location-card {
+            background: linear-gradient(to bottom right, #dbeafe, white);
+            border: 1px solid #93c5fd;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: box-shadow 0.3s;
+        }
+        
+        .location-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .location-subtitle {
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question:hover {
+            background: #f9fafb;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: #6b7280;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        .chevron {
+            transition: transform 0.3s;
+        }
+        
+        .chevron.rotate {
+            transform: rotate(180deg);
+        }
+        
+        /* Map Section */
+        .map-grid {
+            display: grid;
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .map-placeholder {
+            background: #d1d5db;
+            border-radius: 0.75rem;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            color: #2563eb;
+            flex-shrink: 0;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: #2563eb;
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .cta h2 {
+            color: white;
+        }
+        
+        .cta-description {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Footer */
+        footer {
+            background: #111827;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            text-align: center;
+            color: #9ca3af;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        .modal-close:hover {
+            color: #4b5563;
+        }
+        
+        .modal h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            nav {
+                display: flex;
+            }
+            
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .hero-buttons {
+                flex-direction: row;
+            }
+            
+            .map-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: row;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            h1 {
+                font-size: 3.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">B</div>
+                    <span class="logo-text">BoxLok</span>
                 </div>
-                <p className="text-gray-700 mb-4 italic">"{review.review}"</p>
-                <p className="font-semibold">{review.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          
-          <div className="space-y-4">
-            {[
-              { q: 'BoxLok giá bao nhiêu?', a: 'Giá phụ thuộc vào kích thước hành lý và thời gian lưu trữ. Liên hệ để nhận báo giá chính xác.' },
-              { q: 'BoxLok có an toàn không?', a: 'Có! Chúng tôi có hệ thống giám sát 24/7, bảo hiểm hành lý và niêm phong an toàn.' },
-              { q: 'Làm sao để gặp nhân viên BoxLok?', a: 'Sau khi đặt lịch, nhân viên sẽ liên hệ xác nhận và đến đúng giờ theo địa điểm bạn chỉ định.' },
-              { q: 'Liên hệ hỗ trợ khách hàng như thế nào?', a: 'Bạn có thể liên hệ qua WhatsApp, hotline (tiếng Việt) hoặc email 24/7.' }
-            ].map((faq, idx) => (
-              <div key={idx} className="border border-gray-200 rounded-lg">
-                <button
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50"
-                >
-                  <span className="font-semibold text-lg">{faq.q}</span>
-                  <ChevronDown className={`transform transition ${openFaq === idx ? 'rotate-180' : ''}`} />
-                </button>
-                {openFaq === idx && (
-                  <div className="px-6 pb-6 text-gray-600">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Find Us Easily</h2>
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="bg-gray-300 rounded-xl h-96 flex items-center justify-center">
-              <MapPin size={64} className="text-gray-500" />
-              <span className="ml-4 text-gray-600 text-lg">Map will be integrated here</span>
+                <nav>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#locations">Locations</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="#faq">FAQ</a>
+                </nav>
+                <button class="btn btn-primary" onclick="openBookingForm()">Book Now</button>
             </div>
-            <div className="space-y-6">
-              <div className="flex gap-4">
-                <MapPin className="text-blue-600 flex-shrink-0" size={24} />
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
                 <div>
-                  <h3 className="font-bold text-lg mb-2">The Address</h3>
-                  <p className="text-gray-600">Central 2, Vinhomes Central Park (Grand Plaza), Ho Chi Minh International Airport (SGN), Ho Chi Minh, Vietnam</p>
+                    <div class="badge">Trusted by 1000+ Travelers</div>
+                    <h1>
+                        LUGGAGE STORAGE
+                        <span class="text-blue">with pick-up and delivery</span>
+                        <span>wherever you are</span>
+                    </h1>
+                    <p class="hero-description">
+                        Dịch vụ gửi hành lý chuyên nghiệp tại TP.HCM với thu gom và giao hàng tận nơi. An toàn, tiện lợi, giá cả minh bạch.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="openBookingForm()">Book Now</button>
+                        <a href="https://wa.me/yourwhatsappnumber" class="btn btn-secondary btn-large" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <i data-lucide="message-circle"></i>
+                            WhatsApp Us
+                        </a>
+                    </div>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i data-lucide="shield" style="color: #16a34a;"></i>
+                            <span style="font-weight: 500; font-size: 0.875rem;">100% Secure</span>
+                        </div>
+                        <div class="feature-item">
+                            <i data-lucide="clock" style="color: #2563eb;"></i>
+                            <span style="font-weight: 500; font-size: 0.875rem;">24/7 Support</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className="flex gap-4">
-                <Phone className="text-blue-600 flex-shrink-0" size={24} />
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=1000&fit=crop" alt="Delivery person with luggage">
+                    <div class="rating-card">
+                        <div class="stars">
+                            <i data-lucide="star" class="star"></i>
+                            <i data-lucide="star" class="star"></i>
+                            <i data-lucide="star" class="star"></i>
+                            <i data-lucide="star" class="star"></i>
+                            <i data-lucide="star" class="star"></i>
+                        </div>
+                        <p style="font-weight: 600; font-size: 0.875rem;">1000+ Happy Travelers</p>
+                        <p style="font-size: 0.75rem; color: #6b7280;">Trusted in Ho Chi Minh City</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="bg-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p class="section-description">Simple, fast, and stress-free. Get back to exploring immediately.</p>
+            </div>
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <div class="step-label">STEP 1</div>
+                    <h3 class="card-title">Book Online</h3>
+                    <p class="card-description">Đặt lịch qua website hoặc liên hệ qua WhatsApp</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚗</div>
+                    <div class="step-label">STEP 2</div>
+                    <h3 class="card-title">We Pick Up</h3>
+                    <p class="card-description">Chúng tôi đến lấy, niêm phong và thu gom hành lý của bạn</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔒</div>
+                    <div class="step-label">STEP 3</div>
+                    <h3 class="card-title">We Store</h3>
+                    <p class="card-description">Chúng tôi bảo quản an toàn có giám sát 24/7</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <div class="step-label">STEP 4</div>
+                    <h3 class="card-title">We Deliver</h3>
+                    <p class="card-description">Giao đến địa điểm bạn chỉ định đúng giờ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Where You Can Use BoxLok</h2>
+                <p class="section-description">Flexible pickup and delivery across Ho Chi Minh City</p>
+            </div>
+            <div class="grid">
+                <div class="location-card">
+                    <div class="card-icon">🏨</div>
+                    <h3 class="card-title">Hotels & Airbnb</h3>
+                    <p class="location-subtitle">TP.HCM + các thành phố khác</p>
+                    <p class="card-description">Lấy và giao hành lý tại khách sạn hoặc căn hộ của bạn</p>
+                </div>
+                <div class="location-card">
+                    <div class="card-icon">✈️</div>
+                    <h3 class="card-title">Tan Son Nhat Airport</h3>
+                    <p class="location-subtitle">Lấy/giao tại lề đường sân bay</p>
+                    <p class="card-description">Dịch vụ nhanh chóng tại sân bay SGN</p>
+                </div>
+                <div class="location-card">
+                    <div class="card-icon">📍</div>
+                    <h3 class="card-title">Anywhere in HCMC</h3>
+                    <p class="location-subtitle">Nhà hàng, quán café, điểm tham quan</p>
+                    <p class="card-description">Linh hoạt với mọi địa điểm trong thành phố</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="bg-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2>Join +1000 Luggage-free Travellers</h2>
+                <div class="stars" style="justify-content: center; margin-bottom: 1rem;">
+                    <i data-lucide="star" class="star" style="width: 32px; height: 32px;"></i>
+                    <i data-lucide="star" class="star" style="width: 32px; height: 32px;"></i>
+                    <i data-lucide="star" class="star" style="width: 32px; height: 32px;"></i>
+                    <i data-lucide="star" class="star" style="width: 32px; height: 32px;"></i>
+                    <i data-lucide="star" class="star" style="width: 32px; height: 32px;"></i>
+                </div>
+                <a href="#" style="color: #2563eb; font-size: 1.125rem;">Read more reviews on Google →</a>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <div class="stars" style="margin-bottom: 1rem;">
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                    </div>
+                    <p style="color: #374151; margin-bottom: 1rem; font-style: italic;">"Amazing service! They picked up my luggage from the hotel and delivered it to the airport. So convenient!"</p>
+                    <p style="font-weight: 600;">Sarah Johnson</p>
+                </div>
+                <div class="card">
+                    <div class="stars" style="margin-bottom: 1rem;">
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                    </div>
+                    <p style="color: #374151; margin-bottom: 1rem; font-style: italic;">"Very professional and secure. I could enjoy my last day in HCMC without carrying heavy bags."</p>
+                    <p style="font-weight: 600;">Michael Chen</p>
+                </div>
+                <div class="card">
+                    <div class="stars" style="margin-bottom: 1rem;">
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                    </div>
+                    <p style="color: #374151; margin-bottom: 1rem; font-style: italic;">"Highly recommend! Great communication via WhatsApp and on-time delivery. Worth every penny."</p>
+                    <p style="font-weight: 600;">Emma Wilson</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="container" style="max-width: 900px;">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Frequently Asked Questions</h2>
+            <div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(0)">
+                        <span>BoxLok giá bao nhiêu?</span>
+                        <i data-lucide="chevron-down" class="chevron" id="chevron-0"></i>
+                    </button>
+                    <div class="faq-answer" id="answer-0">
+                        Giá phụ thuộc vào kích thước hành lý và thời gian lưu trữ. Liên hệ để nhận báo giá chính xác.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(1)">
+                        <span>BoxLok có an toàn không?</span>
+                        <i data-lucide="chevron-down" class="chevron" id="chevron-1"></i>
+                    </button>
+                    <div class="faq-answer" id="answer-1">
+                        Có! Chúng tôi có hệ thống giám sát 24/7, bảo hiểm hành lý và niêm phong an toàn.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(2)">
+                        <span>Làm sao để gặp nhân viên BoxLok?</span>
+                        <i data-lucide="chevron-down" class="chevron" id="chevron-2"></i>
+                    </button>
+                    <div class="faq-answer" id="answer-2">
+                        Sau khi đặt lịch, nhân viên sẽ liên hệ xác nhận và đến đúng giờ theo địa điểm bạn chỉ định.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(3)">
+                        <span>Liên hệ hỗ trợ khách hàng như thế nào?</span>
+                        <i data-lucide="chevron-down" class="chevron" id="chevron-3"></i>
+                    </button>
+                    <div class="faq-answer" id="answer-3">
+                        Bạn có thể liên hệ qua WhatsApp, hotline (tiếng Việt) hoặc email 24/7.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="bg-gray">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Find Us Easily</h2>
+            <div class="map-grid">
+                <div class="map-placeholder">
+                    <i data-lucide="map-pin" style="width: 64px; height: 64px;"></i>
+                    <span style="margin-left: 1rem; font-size: 1.125rem;">Map will be integrated here</span>
+                </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">Contact</h3>
-                  <p className="text-gray-600">Hotline: +84 xxx xxx xxx (Tiếng Việt)</p>
-                  <p className="text-gray-600">WhatsApp: +84 xxx xxx xxx (English)</p>
+                    <div class="contact-info">
+                        <i data-lucide="map-pin" class="contact-icon"></i>
+                        <div>
+                            <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">The Address</h3>
+                            <p style="color: #6b7280;">Central 2, Vinhomes Central Park (Grand Plaza), Ho Chi Minh International Airport (SGN), Ho Chi Minh, Vietnam</p>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <i data-lucide="phone" class="contact-icon"></i>
+                        <div>
+                            <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">Contact</h3>
+                            <p style="color: #6b7280;">Hotline: +84 xxx xxx xxx (Tiếng Việt)</p>
+                            <p style="color: #6b7280;">WhatsApp: +84 xxx xxx xxx (English)</p>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <i data-lucide="clock" class="contact-icon"></i>
+                        <div>
+                            <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">Opening Hours</h3>
+                            <p style="color: #6b7280;">Monday - Sunday: 24 hours</p>
+                            <p style="color: #6b7280;">Available for pickup and delivery anytime</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className="flex gap-4">
-                <Clock className="text-blue-600 flex-shrink-0" size={24} />
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Opening Hours</h3>
-                  <p className="text-gray-600">Monday - Sunday: 24 hours</p>
-                  <p className="text-gray-600">Available for pickup and delivery anytime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container" style="max-width: 900px;">
+            <h2>Don't Let Heavy Luggage Slow You Down</h2>
+            <p class="cta-description">Experience Ho Chi Minh City hands-free with BoxLok</p>
+            <div class="cta-buttons">
+                <button class="btn btn-large" style="background: white; color: #2563eb;" onclick="openBookingForm()">Contact Us</button>
+                <a href="tel:+84xxxxxxxxx" class="btn btn-secondary btn-large" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border-color: white; color: white;">
+                    <i data-lucide="phone"></i>
+                    Hotline (Tiếng Việt)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <div class="logo-icon">B</div>
+                        <span class="logo-text">BoxLok</span>
+                    </div>
+                    <p style="color: #9ca3af;">Safe, affordable, and convenient luggage storage in Ho Chi Minh City.</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Don't Let Heavy Luggage Slow You Down</h2>
-          <p className="text-xl mb-8 opacity-90">Experience Ho Chi Minh City hands-free with BoxLok</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => setShowBookingForm(true)}
-              className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100"
-            >
-              Contact Us
-            </button>
-            <a 
-              href="tel:+84xxxxxxxxx"
-              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 flex items-center justify-center gap-2"
-            >
-              <Phone size={24} />
-              Hotline (Tiếng Việt)
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">B</span>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Locations</a></li>
+                    </ul>
                 </div>
-                <span className="text-2xl font-bold">BoxLok</span>
-              </div>
-              <p className="text-gray-400">Safe, affordable, and convenient luggage storage in Ho Chi Minh City.</p>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul style="color: #9ca3af;">
+                        <li>+84 xxx xxx xxx</li>
+                        <li>info@boxlok.com</li>
+                        <li>Ho Chi Minh City, Vietnam</li>
+                    </ul>
+                </div>
             </div>
-            <div>
-              <h4 className="font-bold mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">About Us</a></li>
-                <li><a href="#" className="hover:text-white">Our Team</a></li>
-                <li><a href="#" className="hover:text-white">Locations</a></li>
-              </ul>
+            <div class="footer-bottom">
+                <p>© 2024 BoxLok Luggage Storage. All rights reserved.</p>
             </div>
-            <div>
-              <h4 className="font-bold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Help Center</a></li>
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Contact</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>+84 xxx xxx xxx</li>
-                <li>info@boxlok.com</li>
-                <li>Ho Chi Minh City, Vietnam</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>© 2024 BoxLok Luggage Storage. All rights reserved.</p>
-          </div>
         </div>
-      </footer>
+    </footer>
 
-      {/* Booking Form Modal */}
-      {showBookingForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-8 relative">
-            <button 
-              onClick={() => setShowBookingForm(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-            >
-              <X size={24} />
-            </button>
-            <h3 className="text-2xl font-bold mb-6">Book Your Storage</h3>
-            <form className="space-y-4">
-              <input type="text" placeholder="Your Name" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
-              <input type="email" placeholder="Email" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
-              <input type="tel" placeholder="Phone Number" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
-              <input type="text" placeholder="Pickup Location" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
-              <input type="date" placeholder="Date" className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
-              <textarea placeholder="Special Requests" className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24"></textarea>
-              <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
-                Submit Booking
-              </button>
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeBookingForm()">×</button>
+            <h3>Book Your Storage</h3>
+            <form onsubmit="handleBooking(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Pickup Location" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Special Requests"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Submit Booking</button>
             </form>
-          </div>
         </div>
-      )}
     </div>
-  );
-}
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Booking modal functions
+        function openBookingForm() {
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeBookingForm() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function handleBooking(event) {
+            event.preventDefault();
+            alert('Thank you for your booking! We will contact you shortly.');
+            closeBookingForm();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingForm();
+            }
+        });
+
+        // FAQ toggle function
+        function toggleFaq(index) {
+            const answer = document.getElementById('answer-' + index);
+            const chevron = document.getElementById('chevron-' + index);
+            
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                chevron.classList.remove('rotate');
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelectorAll('.chevron').forEach(item => {
+                    item.classList.remove('rotate');
+                });
+                
+                // Open clicked FAQ
+                answer.classList.add('active');
+                chevron.classList.add('rotate');
+            }
+            
+            // Re-render icons after DOM change
+            lucide.createIcons();
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
